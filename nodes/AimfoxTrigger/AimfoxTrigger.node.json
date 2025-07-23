@@ -1,0 +1,17 @@
+{
+	"node": "n8n-nodes-base.aimfoxTrigger",
+	"nodeVersion": "1.0",
+	"codex": {
+		"categories": ["Development"],
+		"subcategories": {
+			"Development": ["Webhook"]
+		},
+		"resources": {
+			"primaryDocumentation": [
+				{
+					"url": "https://docs.aimfox.com/webhooks"
+				}
+			]
+		}
+	}
+}

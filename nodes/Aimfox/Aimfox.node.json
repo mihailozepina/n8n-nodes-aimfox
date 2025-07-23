@@ -1,0 +1,23 @@
+{
+	"node": "n8n-nodes-base.Aimfox",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": [
+		"Development"
+	],
+	"subcategories": {
+		"Development": ["API"]
+	},
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.aimfox.com"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.aimfox.com"
+			}
+		]
+	}
+}
