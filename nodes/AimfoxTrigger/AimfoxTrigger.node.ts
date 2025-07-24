@@ -1,10 +1,10 @@
 import {
-	INodeType,
-	INodeTypeDescription,
-	IWebhookFunctions,
-	IWebhookResponseData,
+	type IHookFunctions,
+	type IWebhookFunctions,
+	type INodeType,
+	type INodeTypeDescription,
+	type IWebhookResponseData,
 	NodeConnectionType,
-	IHttpRequestOptions,
 } from 'n8n-workflow';
 
 export class AimfoxTrigger implements INodeType {
@@ -14,7 +14,7 @@ export class AimfoxTrigger implements INodeType {
 		icon: 'file:aimfox.svg',
 		group: ['trigger'],
 		version: 1,
-		description: 'Triggers when events happen in Aimfox',
+		description: 'Starts the workflow when Aimfox events occur',
 		defaults: {
 			name: 'Aimfox Trigger',
 		},
@@ -28,250 +28,142 @@ export class AimfoxTrigger implements INodeType {
 				'Content-Type': 'application/json',
 			},
 		},
-		webhooks: [
-			{
-				name: 'default',
-				httpMethod: 'POST',
-				responseMode: 'onReceived',
-				path: 'webhook',
-				restartWebhook: true,
-			},
-		],
 		credentials: [
 			{
 				name: 'aimfoxApi',
 				required: true,
 			},
 		],
+		webhooks: [
+			{
+				name: 'default',
+				httpMethod: 'POST',
+				responseMode: 'onReceived',
+				path: 'webhook',
+			},
+		],
 		properties: [
 			{
-				displayName: 'Trigger On',
-				name: 'triggerOn',
-				type: 'options',
-				options: [
-					{
-						name: 'Campaign Completed',
-						value: 'campaign.completed',
-						description: 'Triggers when a campaign is completed',
-					},
-					{
-						name: 'Campaign Started',
-						value: 'campaign.started',
-						description: 'Triggers when a campaign is started',
-					},
-					{
-						name: 'Contact Created',
-						value: 'contact.created',
-						description: 'Triggers when a new contact is created',
-					},
-					{
-						name: 'Contact Deleted',
-						value: 'contact.deleted',
-						description: 'Triggers when a contact is deleted',
-					},
-					{
-						name: 'Contact Updated',
-						value: 'contact.updated',
-						description: 'Triggers when a contact is updated',
-					},
-					{
-						name: 'Lead Status Changed',
-						value: 'lead.status_changed',
-						description: 'Triggers when lead status changes',
-					},
-					{
-						name: 'Message Received',
-						value: 'message.received',
-						description: 'Triggers when a message is received',
-					},
-					{
-						name: 'Message Sent',
-						value: 'message.sent',
-						description: 'Triggers when a message is sent',
-					},
-					{
-						name: 'New Lead',
-						value: 'lead.created',
-						description: 'Triggers when a new lead is generated',
-					},
-				],
-				default: 'contact.created',
-				required: true,
-			},
-
-			// Conditional fields based on trigger type
-			{
-				displayName: 'Campaign ID',
-				name: 'campaignId',
+				displayName: 'Action Name',
+				name: 'actionName',
 				type: 'string',
-				displayOptions: {
-					show: {
-						triggerOn: ['campaign.started', 'campaign.completed'],
-					},
-				},
-				default: '',
-				description: 'Only trigger for specific campaign (leave empty for all campaigns)',
-			},
-
-			{
-				displayName: 'Lead Status',
-				name: 'leadStatus',
-				type: 'options',
-				displayOptions: {
-					show: {
-						triggerOn: ['lead.status_changed'],
-					},
-				},
-				options: [
-					{ name: 'Any Status', value: '' },
-					{ name: 'Contacted', value: 'contacted' },
-					{ name: 'Converted', value: 'converted' },
-					{ name: 'Dead', value: 'dead' },
-					{ name: 'New', value: 'new' },
-					{ name: 'Qualified', value: 'qualified' },
-				],
-				default: '',
 				description:
-					'Only trigger when lead changes to this status (leave empty for any status change)',
-			},
-
-			{
-				displayName: 'Contact Tags',
-				name: 'contactTags',
-				type: 'string',
-				displayOptions: {
-					show: {
-						triggerOn: ['contact.created', 'contact.updated'],
-					},
-				},
+					'Choose any name you would like. It will show up as a server action in the app.',
 				default: '',
-				placeholder: 'tag1,tag2,tag3',
-				description:
-					'Only trigger for contacts with these tags (comma-separated, leave empty for all)',
 			},
 		],
 	};
 
-	async webhookCheckExists(this: IWebhookFunctions): Promise<boolean> {
-		const webhookUrl = this.getNodeWebhookUrl('default');
+	webhookMethods = {
+		default: {
+			async checkExists(this: IHookFunctions): Promise<boolean> {
+				const webhookUrl = this.getNodeWebhookUrl('default');
+				const webhookData = this.getWorkflowStaticData('node');
+				const actionName = this.getNodeParameter('actionName');
+				// Check all the webhooks which exist already if it is identical to the
+				// one that is supposed to get created.
+				const endpoint = '/subscriptions';
+				const credentials = await this.getCredentials('aimfoxApi');
+				const options = {
+					headers: {
+						Authorization: `Bearer ${credentials.apiKey}`,
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+					},
+					method: 'GET' as const,
+					uri: `https://673b415297f2.ngrok-free.app/api/v1${endpoint}`,
+					json: true,
+				};
+				const webhooks = await this.helpers.request.call(this, options);
 
-		try {
-			const options: IHttpRequestOptions = {
-				method: 'GET',
-				url: '/webhooks',
-			};
+				for (const webhook of webhooks.webhooks) {
+					if (webhook.url === webhookUrl && webhook.actionName === actionName) {
+						webhookData.webhookId = webhook.id;
+						this.logger.debug(
+							`Webhook with ID "${webhook.id}" already exists for action "${actionName}" at URL "${webhookUrl}"`,
+						);
 
-			const response = await this.helpers.httpRequest(options);
-			const webhooks = response.data || response;
+						return true;
+					}
 
-			// Check if webhook with our URL already exists
-			return Array.isArray(webhooks) && webhooks.some((webhook: any) => webhook.url === webhookUrl);
-		} catch (error) {
-			return false;
-		}
-	}
+					this.logger.debug(
+						`Webhook with ID "${webhook.id}" already exists for action "${actionName}" at URL "${webhookUrl}"`,
+					);
+				}
 
-	async webhookCreate(this: IWebhookFunctions): Promise<boolean> {
-		const webhookUrl = this.getNodeWebhookUrl('default');
-		const triggerOn = this.getNodeParameter('triggerOn') as string;
-
-		const options: IHttpRequestOptions = {
-			method: 'POST', // Changed from GET to POST
-			url: '/webhooks',
-			body: {
-				url: webhookUrl,
-				events: [triggerOn],
-				active: true,
+				return false;
 			},
-		};
+			async create(this: IHookFunctions): Promise<boolean> {
+				const webhookData = this.getWorkflowStaticData('node');
+				const webhookUrl = this.getNodeWebhookUrl('default');
+				const actionName = this.getNodeParameter('actionName');
 
-		try {
-			await this.helpers.httpRequest(options);
-			return true;
-		} catch (error) {
-			return false;
-		}
-	}
+				const endpoint = '/subscriptions';
 
-	async webhookDelete(this: IWebhookFunctions): Promise<boolean> {
-		const webhookUrl = this.getNodeWebhookUrl('default');
-
-		try {
-			// First, find the webhook ID
-			const getOptions: IHttpRequestOptions = {
-				method: 'GET',
-				url: '/webhooks',
-			};
-
-			const response = await this.helpers.httpRequest(getOptions);
-			const webhooks = response.data || response;
-			const webhook = Array.isArray(webhooks) && webhooks.find((wh: any) => wh.url === webhookUrl);
-
-			if (webhook) {
-				const deleteOptions: IHttpRequestOptions = {
-					method: 'DELETE',
-					url: `/webhooks/${webhook.id}`, // Use relative URL, not absolute
+				const body = {
+					actionName,
+					url: webhookUrl,
 				};
 
-				await this.helpers.httpRequest(deleteOptions);
-			}
-			return true;
-		} catch (error) {
-			return false;
-		}
-	}
+				const credentials = await this.getCredentials('aimfoxApi');
+				const options = {
+					headers: {
+						Authorization: `Bearer ${credentials.apiKey}`,
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+					},
+					method: 'POST' as const,
+					uri: `https://673b415297f2.ngrok-free.app/api/v1${endpoint}`,
+					body,
+					json: true,
+				};
+				const responseData = await this.helpers.request.call(this, options);
+
+				if (responseData.webhook.id === undefined) {
+					// Required data is missing so was not successful
+					return false;
+				}
+
+				webhookData.webhookId = responseData.webhook.id as string;
+				return true;
+			},
+
+			async delete(this: IHookFunctions): Promise<boolean> {
+				const webhookData = this.getWorkflowStaticData('node');
+				if (webhookData.webhookId !== undefined) {
+					const endpoint = `/subscriptions/${webhookData.webhookId}`;
+
+					try {
+						const credentials = await this.getCredentials('aimfoxApi');
+						const options = {
+							headers: {
+								Authorization: `Bearer ${credentials.apiKey}`,
+								Accept: 'application/json',
+								'Content-Type': 'application/json',
+							},
+							method: 'DELETE' as const,
+							uri: `https://673b415297f2.ngrok-free.app/api/v1${endpoint}`,
+							json: true,
+						};
+						await this.helpers.request.call(this, options);
+					} catch (error) {
+						return false;
+					}
+
+					// Remove from the static workflow data so that it is clear
+					// that no webhooks are registered anymore
+					delete webhookData.webhookId;
+				}
+				return true;
+			},
+		},
+	};
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
-		const bodyData = this.getBodyData();
-		const triggerOn = this.getNodeParameter('triggerOn') as string;
-
-		// Get webhook event type from the request headers
-		const headers = this.getHeaderData();
-		const eventType = headers['x-aimfox-event'] as string;
-
-		// Check if this webhook matches our trigger configuration
-		if (eventType !== triggerOn) {
-			// Return empty if event doesn't match our trigger
-			return {
-				noWebhookResponse: true,
-			};
-		}
-
-		// Additional filtering based on parameters
-		const campaignId = this.getNodeParameter('campaignId', '') as string;
-		const leadStatus = this.getNodeParameter('leadStatus', '') as string;
-		const contactTags = this.getNodeParameter('contactTags', '') as string;
-
-		// Apply filters
-		if (campaignId && bodyData.campaign_id !== campaignId) {
-			return { noWebhookResponse: true };
-		}
-
-		if (leadStatus && bodyData.status !== leadStatus) {
-			return { noWebhookResponse: true };
-		}
-
-		if (contactTags) {
-			const requiredTags = contactTags.split(',').map((tag) => tag.trim());
-			const contactTagsArray = Array.isArray(bodyData.tags) ? bodyData.tags : [];
-			const hasRequiredTag = requiredTags.some((tag) => contactTagsArray.includes(tag));
-			if (!hasRequiredTag) {
-				return { noWebhookResponse: true };
-			}
-		}
+		const body = this.getBodyData();
 
 		return {
-			workflowData: [
-				[
-					{
-						json: {
-							event_type: eventType,
-							timestamp: new Date().toISOString(),
-							data: bodyData,
-						},
-					},
-				],
-			],
+			workflowData: [this.helpers.returnJsonArray(body)],
 		};
 	}
 }
