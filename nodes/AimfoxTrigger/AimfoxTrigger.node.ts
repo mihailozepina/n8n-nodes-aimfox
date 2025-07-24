@@ -36,72 +36,55 @@ export class AimfoxTrigger implements INodeType {
 		],
 		properties: [
 			{
-				displayName: 'Event Type',
-				name: 'eventType',
-				type: 'options',
-				description: 'Select the event type that will trigger the workflow',
-				options: [
-					{ name: 'Account Logged In', value: 'account_logged_in' },
-					{ name: 'Account Logged Out', value: 'account_logged_out' },
-					{ name: 'Connect Accepted', value: 'accepted' },
-					{ name: 'Connect Sent', value: 'connect' },
-					{ name: 'Inmail Reply', value: 'inmail_reply' },
-					{ name: 'Inmail Sent', value: 'inmail' },
-					{ name: 'Message Request Sent', value: 'message_request' },
-					{ name: 'Message Sent', value: 'message' },
-					{ name: 'New Connection', value: 'new_connection' },
-					{ name: 'New Reply', value: 'reply' },
-					{ name: 'Profile Viewed', value: 'view' },
-				],
-				default: 'account_logged_in',
-				required: true,
-			},
-			{
 				displayName: 'Trigger On',
-				name: 'updates',
+				name: 'events',
 				type: 'multiOptions',
 				required: true,
 				default: [],
 				options: [
 					{
-						name: 'Account Review Update',
-						value: 'account_review_update',
+						name: 'Account Logged In Event',
+						value: 'account_logged_in',
 					},
 					{
-						name: 'Account Update',
-						value: 'account_update',
+						name: 'Account Logged Out Event',
+						value: 'account_logged_out',
 					},
 					{
-						name: 'Business Capability Update',
-						value: 'business_capability_update',
+						name: 'Connect Accepted Event',
+						value: 'accepted',
 					},
 					{
-						name: 'Message Template Quality Update',
-						value: 'message_template_quality_update',
+						name: 'Connect Sent Event',
+						value: 'connect',
 					},
 					{
-						name: 'Message Template Status Update',
-						value: 'message_template_status_update',
+						name: 'Inmail Reply Event',
+						value: 'inmail_reply',
 					},
 					{
-						name: 'Messages',
-						value: 'messages',
+						name: 'Inmail Sent Event',
+						value: 'inmail',
 					},
 					{
-						name: 'Phone Number Name Update',
-						value: 'phone_number_name_update',
+						name: 'Message Request Sent Event',
+						value: 'message_request',
 					},
 					{
-						name: 'Phone Number Quality Update',
-						value: 'phone_number_quality_update',
+						name: 'Message Sent Event',
+						value: 'message',
 					},
 					{
-						name: 'Security',
-						value: 'security',
+						name: 'New Connection Event',
+						value: 'new_connection',
 					},
 					{
-						name: 'Template Category Update',
-						value: 'template_category_update',
+						name: 'New Reply Event',
+						value: 'reply',
+					},
+					{
+						name: 'Profile Viewed Event',
+						value: 'view',
 					},
 				],
 			},
@@ -113,7 +96,7 @@ export class AimfoxTrigger implements INodeType {
 			async checkExists(this: IHookFunctions): Promise<boolean> {
 				const webhookUrl = this.getNodeWebhookUrl('default');
 				const webhookData = this.getWorkflowStaticData('node');
-				const eventType = this.getNodeParameter('eventType');
+				const events = this.getNodeParameter('events') as string[];
 
 				const credentials = await this.getCredentials('aimfoxApi');
 
@@ -131,7 +114,7 @@ export class AimfoxTrigger implements INodeType {
 				const responseData = await this.helpers.request.call(this, options);
 
 				for (const webhook of responseData.webhooks) {
-					if (webhook.url === webhookUrl && webhook.eventType === eventType) {
+					if (webhook.url === webhookUrl && webhook.events === events) {
 						webhookData.webhookId = webhook.id;
 
 						return true;
@@ -144,7 +127,7 @@ export class AimfoxTrigger implements INodeType {
 			async create(this: IHookFunctions): Promise<boolean> {
 				const webhookData = this.getWorkflowStaticData('node');
 				const webhookUrl = this.getNodeWebhookUrl('default');
-				const eventType = this.getNodeParameter('eventType');
+				const events = this.getNodeParameter('events');
 
 				const credentials = await this.getCredentials('aimfoxApi');
 
@@ -157,7 +140,7 @@ export class AimfoxTrigger implements INodeType {
 					method: 'POST' as const,
 					uri: `https://673b415297f2.ngrok-free.app/api/v1/subscriptions`,
 					body: {
-						events: [eventType],
+						events: events,
 						url: webhookUrl,
 						name: 'n8n',
 						integration: true,
