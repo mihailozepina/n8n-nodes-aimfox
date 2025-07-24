@@ -26,6 +26,14 @@ export class AimfoxTrigger implements INodeType {
 				required: true,
 			},
 		],
+		requestDefaults: {
+			baseURL: 'https://673b415297f2.ngrok-free.app/api/v1', // change to api.aimfox.com
+			headers: {
+				Authorization: '={{"Bearer " + $credentials.apiKey}}', // replace with jwt
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+		},
 		webhooks: [
 			{
 				name: 'default',
@@ -88,6 +96,42 @@ export class AimfoxTrigger implements INodeType {
 					},
 				],
 			},
+			{
+				displayName: 'Workspace ID',
+				name: 'workspaceId',
+				type: 'options',
+				required: true,
+				typeOptions: {
+					loadOptions: {
+						routing: {
+							request: {
+								method: 'GET',
+								url: '/kurcina', // change this to workspaces
+							},
+							output: {
+								postReceive: [
+									{
+										type: 'rootProperty',
+										properties: {
+											property: 'workspaces',
+										},
+									},
+									{
+										type: 'setKeyValue',
+										properties: {
+											name: '={{$responseItem.name}}',
+											value: '={{$responseItem.id}}',
+										},
+									},
+								],
+							},
+						},
+					},
+				},
+				default: '',
+				description:
+					'Select the Aimfox workspace. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
+			},
 		],
 	};
 
@@ -97,6 +141,7 @@ export class AimfoxTrigger implements INodeType {
 				const webhookUrl = this.getNodeWebhookUrl('default');
 				const webhookData = this.getWorkflowStaticData('node');
 				const events = this.getNodeParameter('events') as string[];
+				const workspaceId = this.getNodeParameter('workspaceId') as string;
 
 				const credentials = await this.getCredentials('aimfoxApi');
 
@@ -107,7 +152,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'GET' as const,
-					uri: 'https://673b415297f2.ngrok-free.app/api/v1/subscriptions',
+					uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions`,
 					json: true,
 				};
 
@@ -128,6 +173,7 @@ export class AimfoxTrigger implements INodeType {
 				const webhookData = this.getWorkflowStaticData('node');
 				const webhookUrl = this.getNodeWebhookUrl('default');
 				const events = this.getNodeParameter('events');
+				const workspaceId = this.getNodeParameter('workspaceId') as string;
 
 				const credentials = await this.getCredentials('aimfoxApi');
 
@@ -138,7 +184,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'POST' as const,
-					uri: `https://673b415297f2.ngrok-free.app/api/v1/subscriptions`,
+					uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions`,
 					body: {
 						events: events,
 						url: webhookUrl,
@@ -161,6 +207,7 @@ export class AimfoxTrigger implements INodeType {
 
 			async delete(this: IHookFunctions): Promise<boolean> {
 				const webhookData = this.getWorkflowStaticData('node');
+				const workspaceId = this.getNodeParameter('workspaceId') as string;
 
 				if (webhookData.webhookId !== undefined) {
 					try {
@@ -173,7 +220,7 @@ export class AimfoxTrigger implements INodeType {
 								'Content-Type': 'application/json',
 							},
 							method: 'DELETE' as const,
-							uri: `https://673b415297f2.ngrok-free.app/api/v1/subscriptions/${webhookData.webhookId}`,
+							uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions/${webhookData.webhookId}`,
 							json: true,
 						};
 
