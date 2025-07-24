@@ -4,6 +4,7 @@ import {
 	IWebhookFunctions,
 	IWebhookResponseData,
 	NodeConnectionType,
+	IHttpRequestOptions,
 } from 'n8n-workflow';
 
 export class AimfoxTrigger implements INodeType {
@@ -19,12 +20,21 @@ export class AimfoxTrigger implements INodeType {
 		},
 		inputs: [],
 		outputs: [NodeConnectionType.Main],
+		requestDefaults: {
+			baseURL: 'https://673b415297f2.ngrok-free.app/api/v1', // change to api.aimfox.com
+			headers: {
+				Authorization: '={{"Bearer " + $credentials.apiKey}}', // replace with jwt
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+		},
 		webhooks: [
 			{
 				name: 'default',
 				httpMethod: 'POST',
 				responseMode: 'onReceived',
 				path: 'webhook',
+				restartWebhook: true,
 			},
 		],
 		credentials: [
@@ -141,6 +151,75 @@ export class AimfoxTrigger implements INodeType {
 			},
 		],
 	};
+
+	async webhookCheckExists(this: IWebhookFunctions): Promise<boolean> {
+		const webhookUrl = this.getNodeWebhookUrl('default');
+
+		try {
+			const options: IHttpRequestOptions = {
+				method: 'GET',
+				url: '/webhooks',
+			};
+
+			const response = await this.helpers.httpRequest(options);
+			const webhooks = response.data || response;
+
+			// Check if webhook with our URL already exists
+			return Array.isArray(webhooks) && webhooks.some((webhook: any) => webhook.url === webhookUrl);
+		} catch (error) {
+			return false;
+		}
+	}
+
+	async webhookCreate(this: IWebhookFunctions): Promise<boolean> {
+		const webhookUrl = this.getNodeWebhookUrl('default');
+		const triggerOn = this.getNodeParameter('triggerOn') as string;
+
+		const options: IHttpRequestOptions = {
+			method: 'POST', // Changed from GET to POST
+			url: '/webhooks',
+			body: {
+				url: webhookUrl,
+				events: [triggerOn],
+				active: true,
+			},
+		};
+
+		try {
+			await this.helpers.httpRequest(options);
+			return true;
+		} catch (error) {
+			return false;
+		}
+	}
+
+	async webhookDelete(this: IWebhookFunctions): Promise<boolean> {
+		const webhookUrl = this.getNodeWebhookUrl('default');
+
+		try {
+			// First, find the webhook ID
+			const getOptions: IHttpRequestOptions = {
+				method: 'GET',
+				url: '/webhooks',
+			};
+
+			const response = await this.helpers.httpRequest(getOptions);
+			const webhooks = response.data || response;
+			const webhook = Array.isArray(webhooks) && webhooks.find((wh: any) => wh.url === webhookUrl);
+
+			if (webhook) {
+				const deleteOptions: IHttpRequestOptions = {
+					method: 'DELETE',
+					url: `/webhooks/${webhook.id}`, // Use relative URL, not absolute
+				};
+
+				await this.helpers.httpRequest(deleteOptions);
+			}
+			return true;
+		} catch (error) {
+			return false;
+		}
+	}
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
 		const bodyData = this.getBodyData();
