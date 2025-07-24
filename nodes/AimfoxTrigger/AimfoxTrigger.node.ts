@@ -20,14 +20,6 @@ export class AimfoxTrigger implements INodeType {
 		},
 		inputs: [],
 		outputs: [NodeConnectionType.Main],
-		requestDefaults: {
-			baseURL: 'https://673b415297f2.ngrok-free.app/api/v1', // change to api.aimfox.com
-			headers: {
-				Authorization: '={{"Bearer " + $credentials.apiKey}}', // replace with jwt
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		},
 		credentials: [
 			{
 				name: 'aimfoxApi',
@@ -44,12 +36,25 @@ export class AimfoxTrigger implements INodeType {
 		],
 		properties: [
 			{
-				displayName: 'Action Name',
-				name: 'actionName',
-				type: 'string',
-				description:
-					'Choose any name you would like. It will show up as a server action in the app.',
-				default: '',
+				displayName: 'Event Type',
+				name: 'eventType',
+				type: 'options',
+				description: 'Select the event type that will trigger the workflow',
+				options: [
+					{ name: 'Account Logged In', value: 'account_logged_in' },
+					{ name: 'Account Logged Out', value: 'account_logged_out' },
+					{ name: 'Connect Accepted', value: 'accepted' },
+					{ name: 'Connect Sent', value: 'connect' },
+					{ name: 'Inmail Reply', value: 'inmail_reply' },
+					{ name: 'Inmail Sent', value: 'inmail' },
+					{ name: 'Message Request Sent', value: 'message_request' },
+					{ name: 'Message Sent', value: 'message' },
+					{ name: 'New Connection', value: 'new_connection' },
+					{ name: 'New Reply', value: 'reply' },
+					{ name: 'Profile Viewed', value: 'view' },
+				],
+				default: 'account_logged_in',
+				required: true,
 			},
 		],
 	};
@@ -59,11 +64,10 @@ export class AimfoxTrigger implements INodeType {
 			async checkExists(this: IHookFunctions): Promise<boolean> {
 				const webhookUrl = this.getNodeWebhookUrl('default');
 				const webhookData = this.getWorkflowStaticData('node');
-				const actionName = this.getNodeParameter('actionName');
-				// Check all the webhooks which exist already if it is identical to the
-				// one that is supposed to get created.
-				const endpoint = '/subscriptions';
+				const eventType = this.getNodeParameter('eventType');
+
 				const credentials = await this.getCredentials('aimfoxApi');
+
 				const options = {
 					headers: {
 						Authorization: `Bearer ${credentials.apiKey}`,
@@ -71,41 +75,30 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'GET' as const,
-					uri: `https://673b415297f2.ngrok-free.app/api/v1${endpoint}`,
+					uri: 'https://673b415297f2.ngrok-free.app/api/v1/subscriptions',
 					json: true,
 				};
-				const webhooks = await this.helpers.request.call(this, options);
 
-				for (const webhook of webhooks.webhooks) {
-					if (webhook.url === webhookUrl && webhook.actionName === actionName) {
+				const responseData = await this.helpers.request.call(this, options);
+
+				for (const webhook of responseData.webhooks) {
+					if (webhook.url === webhookUrl && webhook.eventType === eventType) {
 						webhookData.webhookId = webhook.id;
-						this.logger.debug(
-							`Webhook with ID "${webhook.id}" already exists for action "${actionName}" at URL "${webhookUrl}"`,
-						);
 
 						return true;
 					}
-
-					this.logger.debug(
-						`Webhook with ID "${webhook.id}" already exists for action "${actionName}" at URL "${webhookUrl}"`,
-					);
 				}
 
 				return false;
 			},
+
 			async create(this: IHookFunctions): Promise<boolean> {
 				const webhookData = this.getWorkflowStaticData('node');
 				const webhookUrl = this.getNodeWebhookUrl('default');
-				const actionName = this.getNodeParameter('actionName');
-
-				const endpoint = '/subscriptions';
-
-				const body = {
-					actionName,
-					url: webhookUrl,
-				};
+				const eventType = this.getNodeParameter('eventType');
 
 				const credentials = await this.getCredentials('aimfoxApi');
+
 				const options = {
 					headers: {
 						Authorization: `Bearer ${credentials.apiKey}`,
@@ -113,28 +106,34 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'POST' as const,
-					uri: `https://673b415297f2.ngrok-free.app/api/v1${endpoint}`,
-					body,
+					uri: `https://673b415297f2.ngrok-free.app/api/v1/subscriptions`,
+					body: {
+						events: [eventType],
+						url: webhookUrl,
+						name: 'n8n',
+						integration: true,
+					},
 					json: true,
 				};
+
 				const responseData = await this.helpers.request.call(this, options);
 
 				if (responseData.webhook.id === undefined) {
-					// Required data is missing so was not successful
 					return false;
 				}
 
 				webhookData.webhookId = responseData.webhook.id as string;
+
 				return true;
 			},
 
 			async delete(this: IHookFunctions): Promise<boolean> {
 				const webhookData = this.getWorkflowStaticData('node');
-				if (webhookData.webhookId !== undefined) {
-					const endpoint = `/subscriptions/${webhookData.webhookId}`;
 
+				if (webhookData.webhookId !== undefined) {
 					try {
 						const credentials = await this.getCredentials('aimfoxApi');
+
 						const options = {
 							headers: {
 								Authorization: `Bearer ${credentials.apiKey}`,
@@ -142,18 +141,18 @@ export class AimfoxTrigger implements INodeType {
 								'Content-Type': 'application/json',
 							},
 							method: 'DELETE' as const,
-							uri: `https://673b415297f2.ngrok-free.app/api/v1${endpoint}`,
+							uri: `https://673b415297f2.ngrok-free.app/api/v1/subscriptions/${webhookData.webhookId}`,
 							json: true,
 						};
+
 						await this.helpers.request.call(this, options);
 					} catch (error) {
 						return false;
 					}
 
-					// Remove from the static workflow data so that it is clear
-					// that no webhooks are registered anymore
 					delete webhookData.webhookId;
 				}
+
 				return true;
 			},
 		},
