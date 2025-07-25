@@ -6,6 +6,7 @@ import { leadFields } from './properties/lead/fields';
 import { noteFields } from './properties/note/fields';
 import { templateFields } from './properties/template/fields';
 import { campaignFields } from './properties/campaign/fields';
+import { workspaceFields } from './properties/workspace/fields';
 
 export class Aimfox implements INodeType {
 	description: INodeTypeDescription = {
@@ -548,44 +549,7 @@ export class Aimfox implements INodeType {
 				default: 'listTemplates',
 			},
 
-			// workspaces dropdown
-			{
-				displayName: 'Workspace ID',
-				name: 'workspaceId',
-				type: 'options',
-				required: true,
-				typeOptions: {
-					loadOptions: {
-						routing: {
-							request: {
-								method: 'GET',
-								url: '/kurcina', // change this to workspaces
-							},
-							output: {
-								postReceive: [
-									{
-										type: 'rootProperty',
-										properties: {
-											property: 'workspaces',
-										},
-									},
-									{
-										type: 'setKeyValue',
-										properties: {
-											name: '={{$responseItem.name}}',
-											value: '={{$responseItem.id}}',
-										},
-									},
-								],
-							},
-						},
-					},
-				},
-				default: '',
-				description:
-					'Select the Aimfox workspace. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
-			},
-
+			...workspaceFields,
 			...blacklistFields,
 			...campaignFields,
 			...conversationFields,
