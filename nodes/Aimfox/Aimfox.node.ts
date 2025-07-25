@@ -594,7 +594,16 @@ export class Aimfox implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['campaign'],
-						operation: ['resumeCampaign', 'pauseCampaign', 'addProfileToCampaign', 'getCampaign'],
+						operation: [
+							'resumeCampaign',
+							'pauseCampaign',
+							'addProfileToCampaign',
+							'getCampaign',
+							'addProfileToCampaignWithCustomVariables',
+						],
+					},
+					hide: {
+						workspaceId: [''],
 					},
 				},
 				typeOptions: {
@@ -623,10 +632,11 @@ export class Aimfox implements INodeType {
 							},
 						},
 					},
+					loadOptionsDependsOn: ['workspaceId'],
 				},
 				default: '',
 				description:
-					'Select the Aimfox campaign to resume. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
+					'Select the Aimfox campaign. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 			},
 			{
 				displayName: 'Profile URL',
