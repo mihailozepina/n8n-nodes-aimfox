@@ -29,7 +29,7 @@ export class AimfoxTrigger implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: 'https://673b415297f2.ngrok-free.app/api/v1', // change to api.aimfox.com
+			baseURL: 'https://api.aimfox.dev/api/v1',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'GET' as const,
-					uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions`, // change to api.aimfox.com
+					uri: `https://api.aimfox.dev/api/v1/workspaces/${workspaceId}/subscriptions`,
 					json: true,
 				};
 
@@ -95,7 +95,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'POST' as const,
-					uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions`, // change to api.aimfox.com
+					uri: `https://api.aimfox.dev/api/v1/workspaces/${workspaceId}/subscriptions`,
 					body: {
 						events: events,
 						url: webhookUrl,
@@ -131,7 +131,7 @@ export class AimfoxTrigger implements INodeType {
 								'Content-Type': 'application/json',
 							},
 							method: 'DELETE' as const,
-							uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions/${webhookData.webhookId}`, // change to api.aimfox.com
+							uri: `https://api.aimfox.dev/api/v1/workspaces/${workspaceId}/subscriptions/${webhookData.webhookId}`,
 							json: true,
 						};
 

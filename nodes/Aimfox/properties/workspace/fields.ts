@@ -11,7 +11,7 @@ export const workspaceFields: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/kurcina', // change this to workspaces
+						url: '/workspaces',
 					},
 					output: {
 						postReceive: [
