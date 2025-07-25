@@ -585,9 +585,6 @@ export class Aimfox implements INodeType {
 					'Select the Aimfox workspace. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 			},
 
-			...blacklistFields,
-			...conversationFields,
-
 			// CAMPAIGN FIELDS
 			{
 				displayName: 'Campaign ID',
@@ -661,6 +658,8 @@ export class Aimfox implements INodeType {
 				},
 			},
 
+			...blacklistFields,
+			...conversationFields,
 			...labelFields,
 			...leadFields,
 			...noteFields,
