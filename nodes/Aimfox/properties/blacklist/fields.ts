@@ -8,7 +8,7 @@ export const blacklistFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['blacklist'],
-				operation: ['addProfileToBlacklist'],
+				operation: ['addProfileToBlacklist', 'removeProfileFromBlacklist'],
 			},
 		},
 		default: '',

@@ -9,6 +9,7 @@ import { campaignFields } from './properties/campaign/fields';
 import { workspaceFields } from './properties/workspace/fields';
 
 import { accountOperations } from './properties/account/operations';
+import { blacklistOperations } from './properties/blacklist/operations';
 
 export class Aimfox implements INodeType {
 	description: INodeTypeDescription = {
@@ -77,58 +78,7 @@ export class Aimfox implements INodeType {
 			},
 
 			accountOperations,
-
-			// BLACKLIST OPERATIONS
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: {
-					show: {
-						resource: ['blacklist'],
-					},
-				},
-				options: [
-					{
-						name: 'List Blacklisted Accounts',
-						value: 'listBlacklist',
-						action: 'List blacklist',
-						description: 'List all blacklisted accounts in the workspace',
-						routing: {
-							request: {
-								method: 'GET',
-								url: '=/workspaces/{{$parameter["workspaceId"]}}/blacklist',
-							},
-						},
-					},
-					{
-						name: 'Add Profile to Blacklist',
-						value: 'addProfileToBlacklist',
-						action: 'Add profile to blacklist',
-						description: 'Add profile to the blacklist using the profile URN',
-						routing: {
-							request: {
-								method: 'POST',
-								url: '=/workspaces/{{$parameter["workspaceId"]}}/blacklist/{{$parameter["profileUrn"]}}',
-							},
-						},
-					},
-					{
-						name: 'Remove Profile From Blacklist',
-						value: 'removeProfileFromBlacklist',
-						action: 'Remove profile from blacklist',
-						description: 'Remove profile from the blacklist using the profile URN',
-						routing: {
-							request: {
-								method: 'DELETE',
-								url: '=/workspaces/{{$parameter["workspaceId"]}}/blacklist/{{$parameter["profileUrn"]}}',
-							},
-						},
-					},
-				],
-				default: 'listBlacklist',
-			},
+			blacklistOperations,
 
 			// CONVERSATION OPERATIONS
 			{
