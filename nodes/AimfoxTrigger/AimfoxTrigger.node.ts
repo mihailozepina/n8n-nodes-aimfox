@@ -29,7 +29,6 @@ export class AimfoxTrigger implements INodeType {
 		requestDefaults: {
 			baseURL: 'https://673b415297f2.ngrok-free.app/api/v1', // change to api.aimfox.com
 			headers: {
-				Authorization: '={{"Bearer " + $credentials.apiKey}}', // replace with jwt
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},

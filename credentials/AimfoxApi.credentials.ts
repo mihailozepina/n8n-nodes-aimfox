@@ -17,8 +17,8 @@ export class AimfoxApi implements ICredentialType {
 	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
 		properties: {
-			qs: {
-				appid: '={{$credentials.apiKey}}',
+			headers: {
+				Authorization: '={{"Bearer " + $credentials.apiKey}}'
 			},
 		},
 	};
