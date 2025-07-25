@@ -1,45 +1,73 @@
 import { INodeProperties } from 'n8n-workflow';
-import { blacklistFields as blacklistFields } from './blacklist/fields';
+import { accountOperations } from './account/operations';
+import { blacklistFields } from './blacklist/fields';
+import { blacklistOperations } from './blacklist/operations';
+import { campaignFields } from './campaign/fields';
+import { campaignOperations } from './campaign/operations';
+import { conversationFields } from './conversation/fields';
+import { conversationOperations } from './conversation/operations';
+import { labelFields } from './label/fields';
+import { labelOperations } from './label/operations';
+import { leadFields } from './lead/fields';
+import { leadOperations } from './lead/operations';
+import { noteFields } from './note/fields';
+import { templateFields } from './template/fields';
+import { templateOperations } from './template/operations';
+import { workspaceFields } from './workspace/fields';
 
-const resourcesOptions: INodeProperties = {
-	displayName: 'Recurso',
+const resourceOptions: INodeProperties = {
+	displayName: 'Resource',
 	name: 'resource',
 	type: 'options',
 	noDataExpression: true,
 	options: [
 		{
-			name: 'Instancia',
-			value: 'instances-api',
+			name: 'Account',
+			value: 'account',
 		},
 		{
-			name: 'Mensagem',
-			value: 'messages-api',
+			name: 'Blacklist',
+			value: 'blacklist',
 		},
 		{
-			name: 'Grupo',
-			value: 'groups-api',
+			name: 'Campaign',
+			value: 'campaign',
 		},
 		{
-			name: 'Chat',
-			value: 'chat-api',
+			name: 'Conversation',
+			value: 'conversation',
 		},
 		{
-			name: 'Perfil',
-			value: 'profile-api',
+			name: 'Label',
+			value: 'label',
 		},
 		{
-			name: 'Evento',
-			value: 'events-api',
+			name: 'Lead',
+			value: 'lead',
 		},
 		{
-			name: 'Integração',
-			value: 'integrations-api',
+			name: 'Template',
+			value: 'template',
 		},
 	],
-	default: 'instances-api',
+	default: 'account',
 };
 
-export const evolutionNodeProperties = [
-	resourcesOptions,
+export const aimfoxNodeProperties = [
+	resourceOptions,
+	accountOperations,
+	blacklistOperations,
+	conversationOperations,
+	campaignOperations,
+	labelOperations,
+	leadOperations,
+	templateOperations,
+	...workspaceFields,
 	...blacklistFields,
+	...campaignFields,
+	...conversationFields,
+	...labelFields,
+	...leadFields,
+	...noteFields,
+	...templateFields,
 ];
