@@ -21,6 +21,9 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns/{{$parameter["campaignId"]}}/audience',
+					headers: {
+						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
+					},
 					body: {
 						profile_url: '={{$parameter["profileUrl"]}}',
 					},
@@ -36,6 +39,9 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns/{{$parameter["campaignId"]}}/audience/multiple',
+					headers: {
+						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
+					},
 					body: {
 						type: 'profile_url',
 						profiles: [
@@ -57,6 +63,9 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns/{{$parameter["campaignId"]}}',
+					headers: {
+						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
+					},
 				},
 			},
 		},
@@ -69,6 +78,9 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns',
+					headers: {
+						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
+					},
 				},
 			},
 		},
@@ -81,6 +93,9 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'PATCH',
 					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns/{{$parameter["campaignId"]}}',
+					headers: {
+						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
+					},
 					body: {
 						state: 'PAUSED',
 					},
@@ -96,6 +111,9 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'PATCH',
 					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns/{{$parameter["campaignId"]}}',
+					headers: {
+						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
+					},
 					body: {
 						state: 'ACTIVE',
 					},

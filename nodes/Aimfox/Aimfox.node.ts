@@ -12,6 +12,7 @@ import { accountOperations } from './properties/account/operations';
 import { blacklistOperations } from './properties/blacklist/operations';
 import { conversationOperations } from './properties/conversation/operations';
 import { campaignOperations } from './properties/campaign/operations';
+import { labelOperations } from './properties/label/operations';
 
 export class Aimfox implements INodeType {
 	description: INodeTypeDescription = {
@@ -83,50 +84,7 @@ export class Aimfox implements INodeType {
 			blacklistOperations,
 			conversationOperations,
 			campaignOperations,
-
-			// LABEL OPERATIONS
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: {
-					show: {
-						resource: ['label'],
-					},
-				},
-				options: [
-					{
-						name: 'List Labels',
-						value: 'listLabels',
-						action: 'List labels',
-						description: 'List all labels for the selected workspace',
-						routing: {
-							request: {
-								method: 'GET',
-								url: '=/workspaces/{{$parameter["workspaceId"]}}/labels',
-							},
-						},
-					},
-					{
-						name: 'Add Label',
-						value: 'addLabel',
-						action: 'Add label',
-						description: 'Add a new label to the selected workspace',
-						routing: {
-							request: {
-								method: 'POST',
-								url: '=/workspaces/{{$parameter["workspaceId"]}}/labels',
-								body: {
-									name: '={{$parameter["labelName"]}}',
-									color: '={{$parameter["labelColor"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'listLabels',
-			},
+			labelOperations,
 
 			// LEAD OPERATIONS
 			{
