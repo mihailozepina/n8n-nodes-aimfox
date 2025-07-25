@@ -8,6 +8,8 @@ import { templateFields } from './properties/template/fields';
 import { campaignFields } from './properties/campaign/fields';
 import { workspaceFields } from './properties/workspace/fields';
 
+import { accountOperations } from './properties/account/operations';
+
 export class Aimfox implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Aimfox',
@@ -74,33 +76,7 @@ export class Aimfox implements INodeType {
 				default: 'account',
 			},
 
-			// ACCOUNT OPERATIONS
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: {
-					show: {
-						resource: ['account'],
-					},
-				},
-				options: [
-					{
-						name: 'List Accounts',
-						value: 'listAccounts',
-						action: 'List accounts',
-						description: 'List all accounts in the workspace',
-						routing: {
-							request: {
-								method: 'GET',
-								url: '=/workspaces/{{$parameter["workspaceId"]}}/accounts',
-							},
-						},
-					},
-				],
-				default: 'listAccounts',
-			},
+			accountOperations,
 
 			// BLACKLIST OPERATIONS
 			{
