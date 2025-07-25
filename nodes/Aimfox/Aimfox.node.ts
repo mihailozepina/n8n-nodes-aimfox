@@ -1,4 +1,10 @@
 import { INodeType, INodeTypeDescription, NodeConnectionType } from 'n8n-workflow';
+import { blacklistFields } from './properties/blacklist/fields';
+import { conversationFields } from './properties/conversation/fields';
+import { labelFields } from './properties/label/fields';
+import { leadFields } from './properties/lead/fields';
+import { noteFields } from './properties/note/fields';
+import { templateFields } from './properties/template/fields';
 
 export class Aimfox implements INodeType {
 	description: INodeTypeDescription = {
@@ -579,85 +585,8 @@ export class Aimfox implements INodeType {
 					'Select the Aimfox workspace. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 			},
 
-			// BLACKLIST FIELDS
-			{
-				displayName: 'Profile URN',
-				name: 'profileUrn',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['blacklist'],
-						operation: ['addProfileToBlacklist'],
-					},
-				},
-				default: '',
-				placeholder: 'ACoAAAK-hCcB6RvA71OCuRk-JHYpV6FFKIjbxpY',
-				description: 'The LinkedIn URN of the profile to add to the blacklist',
-				required: true,
-			},
-
-			// CONVERSATION FIELDS
-			{
-				displayName: 'Conversation URN',
-				name: 'conversationUrn',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['conversation'],
-						operation: ['getConversation', 'sendMessageToConversation', 'markConversationAsRead'],
-					},
-				},
-				default: '',
-				placeholder:
-					'2-MTczMTgzNzQyMTM4OGI1NzMzNC0wMDMmNDU5NGMxYzgtZGIyMi00Yzc4LWFjNTYtOWIyNDdmMzI4MmQwXzAxMg==',
-				description: 'The URN of the conversation to retrieve',
-				required: true,
-			},
-			{
-				displayName: 'Account ID',
-				name: 'accountId',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['conversation'],
-						operation: ['getLeadConversation', 'startConversation', 'sendMessageToConversation', 'markConversationAsRead'],
-					},
-				},
-				default: '',
-				placeholder: '987654321',
-				description: 'The LinkedIn ID of the account to retrieve the conversation for',
-				required: true,
-			},
-			{
-				displayName: 'Lead ID',
-				name: 'leadId',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['conversation'],
-						operation: ['getLeadConversation', 'startConversation'],
-					},
-				},
-				default: '',
-				placeholder: '123123123',
-				description: 'The LinkedIn ID of the lead the conversation was with',
-				required: true,
-			},
-			{
-				displayName: 'Conversation Message',
-				name: 'conversationMessage',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['conversation'],
-						operation: ['startConversation', 'sendMessageToConversation'],
-					},
-				},
-				default: '',
-				placeholder: 'Hello! How are you?',
-				description: 'The message to send in the conversation',
-				required: true,
-			},
+			...blacklistFields,
+			...conversationFields,
 
 			// CAMPAIGN FIELDS
 			{
@@ -732,188 +661,10 @@ export class Aimfox implements INodeType {
 				},
 			},
 
-			// LABEL FIELDS
-			{
-				displayName: 'Label ID',
-				name: 'labelId',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['lead'],
-						operation: ['addLabelToLead', 'removeLabelFromLead'],
-					},
-				},
-				default: '',
-				placeholder: '83b3aa1d-cda0-42b3-845c-afccf1192dc5',
-				description: 'The ID of the label',
-				required: true,
-			},
-			{
-				displayName: 'Label Name',
-				name: 'labelName',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['label'],
-						operation: ['addLabel'],
-					},
-				},
-				default: '',
-				placeholder: 'Label Name',
-				description: 'The name of the label to add',
-				required: true,
-			},
-			{
-				displayName: 'Label Color',
-				name: 'labelColor',
-				type: 'options',
-				displayOptions: {
-					show: {
-						resource: ['label'],
-						operation: ['addLabel'],
-					},
-				},
-				options: [
-					{ name: 'Blue', value: 'info' },
-					{ name: 'Gray', value: 'quaternary' },
-					{ name: 'Green', value: 'success' },
-					{ name: 'Purple', value: 'secondary' },
-					{ name: 'Red', value: 'danger' },
-					{ name: 'Yellow', value: 'yellow' },
-				],
-				default: 'info',
-				description: 'The color of the label to add',
-				required: true,
-			},
-
-			// LEAD FIELDS
-			{
-				displayName: 'Lead ID',
-				name: 'leadId',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['lead'],
-						operation: ['getLead', 'addLabelToLead', 'removeLabelFromLead', 'addNoteToLead'],
-					},
-				},
-				default: '',
-				placeholder: '1113575872',
-				description: 'The LinkedIn ID of the lead to retrieve',
-				required: true,
-			},
-
-			// NOTE FIELDS
-			{
-				displayName: 'Note Text',
-				name: 'noteText',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['lead'],
-						operation: ['addNoteToLead'],
-					},
-				},
-				default: '',
-				placeholder: 'Note text',
-				description: 'The text of the note to add to the lead',
-				required: true,
-			},
-
-			// TEMPLATE FIELDS
-			{
-				displayName: 'Template ID',
-				name: 'templateId',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['template'],
-						operation: ['getTemplate', 'removeTemplate'],
-					},
-				},
-				default: '',
-				placeholder: '6b36b919-79ab-4656-84ea-e23a9f840df9',
-				description: 'The ID of the template to retrieve',
-				required: true,
-			},
-			{
-				displayName: 'Template Name',
-				name: 'templateName',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['template'],
-						operation: ['createTemplate'],
-					},
-				},
-				default: '',
-				placeholder: 'Template Name',
-				description: 'The name of the template to create',
-				required: true,
-			},
-			{
-				displayName: 'Template Subject',
-				name: 'templateSubject',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['template'],
-						operation: ['createTemplate'],
-					},
-				},
-				default: '',
-				placeholder: 'Template Subject',
-				description: 'The subject of the template to create',
-				required: true,
-			},
-			{
-				displayName: 'Template Message',
-				name: 'templateMessage',
-				type: 'string',
-				displayOptions: {
-					show: {
-						resource: ['template'],
-						operation: ['createTemplate'],
-					},
-				},
-				default: '',
-				placeholder: 'Template Message',
-				description: 'The message of the template to create',
-				required: true,
-			},
-			{
-				displayName: 'Template Type',
-				name: 'templateType',
-				type: 'options',
-				displayOptions: {
-					show: {
-						resource: ['template'],
-						operation: ['createTemplate'],
-					},
-				},
-				options: [
-					{ name: 'Note', value: 'NOTE_TEMPLATE' },
-					{ name: 'Inmail', value: 'INMAIL_TEMPLATE' },
-					{ name: 'Message', value: 'MESSAGE_TEMPLATE' },
-				],
-				default: 'NOTE_TEMPLATE',
-				description: 'The type of the template to create',
-				required: true,
-			},
-			{
-				displayName: 'Template AI',
-				name: 'templateAi',
-				type: 'boolean',
-				displayOptions: {
-					show: {
-						resource: ['template'],
-						operation: ['createTemplate'],
-					},
-				},
-				default: false,
-				description: 'Whether to use AI for the template or not',
-				required: true,
-			},
+			...labelFields,
+			...leadFields,
+			...noteFields,
+			...templateFields,
 		],
 	};
 }
