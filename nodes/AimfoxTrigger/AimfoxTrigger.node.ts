@@ -7,6 +7,8 @@ import {
 	NodeConnectionType,
 } from 'n8n-workflow';
 
+import { workspaceFields } from './properties/workspace/fields';
+
 export class AimfoxTrigger implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Aimfox Trigger',
@@ -95,42 +97,7 @@ export class AimfoxTrigger implements INodeType {
 					},
 				],
 			},
-			{
-				displayName: 'Workspace ID',
-				name: 'workspaceId',
-				type: 'options',
-				required: true,
-				typeOptions: {
-					loadOptions: {
-						routing: {
-							request: {
-								method: 'GET',
-								url: '/kurcina', // change this to workspaces
-							},
-							output: {
-								postReceive: [
-									{
-										type: 'rootProperty',
-										properties: {
-											property: 'workspaces',
-										},
-									},
-									{
-										type: 'setKeyValue',
-										properties: {
-											name: '={{$responseItem.name}}',
-											value: '={{$responseItem.id}}',
-										},
-									},
-								],
-							},
-						},
-					},
-				},
-				default: '',
-				description:
-					'Select the Aimfox workspace. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
-			},
+			...workspaceFields,
 		],
 	};
 
@@ -151,7 +118,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'GET' as const,
-					uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions`,
+					uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions`, // change to api.aimfox.com
 					json: true,
 				};
 
@@ -183,7 +150,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'POST' as const,
-					uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions`,
+					uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions`, // change to api.aimfox.com
 					body: {
 						events: events,
 						url: webhookUrl,
@@ -219,7 +186,7 @@ export class AimfoxTrigger implements INodeType {
 								'Content-Type': 'application/json',
 							},
 							method: 'DELETE' as const,
-							uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions/${webhookData.webhookId}`,
+							uri: `https://673b415297f2.ngrok-free.app/api/v1/workspaces/${workspaceId}/subscriptions/${webhookData.webhookId}`, // change to api.aimfox.com
 							json: true,
 						};
 
