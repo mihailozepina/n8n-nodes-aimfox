@@ -1,0 +1,83 @@
+import { INodeProperties } from 'n8n-workflow';
+
+export const templateOperations: INodeProperties = {
+	displayName: 'Operation',
+	name: 'operation',
+	type: 'options',
+	noDataExpression: true,
+	displayOptions: {
+		show: {
+			resource: ['template'],
+		},
+	},
+	options: [
+		{
+			name: 'List Templates',
+			value: 'listTemplates',
+			action: 'List templates',
+			description: 'List all templates in the selected workspace',
+			routing: {
+				request: {
+					method: 'GET',
+					url: '=/workspaces/{{$parameter["workspaceId"]}}/templates',
+					headers: {
+						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
+					},
+				},
+			},
+		},
+		{
+			name: 'Get Template',
+			value: 'getTemplate',
+			action: 'Get template',
+			description: 'Get a specific template by ID',
+			routing: {
+				request: {
+					method: 'GET',
+					url: '=/workspaces/{{$parameter["workspaceId"]}}/templates/{{$parameter["templateId"]}}',
+					headers: {
+						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
+					},
+				},
+			},
+		},
+		{
+			name: 'Create Template',
+			value: 'createTemplate',
+			action: 'Create template',
+			description: 'Create a new template in the selected workspace',
+			routing: {
+				request: {
+					method: 'POST',
+					url: '=/workspaces/{{$parameter["workspaceId"]}}/templates',
+					headers: {
+						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
+					},
+					body: {
+						name: '={{$parameter["templateName"]}}',
+						type: '={{$parameter["templateType"]}}',
+						subject: '={{$parameter["templateSubject"]}}',
+						message: '={{$parameter["templateMessage"]}}',
+						ai: '={{$parameter["templateAi"]}}',
+					},
+				},
+			},
+		},
+		{
+			name: 'Remove Template',
+			value: 'removeTemplate',
+			action: 'Remove template',
+			description: 'Remove a template from the workspace',
+			routing: {
+				request: {
+					method: 'DELETE',
+					url: '=/workspaces/{{$parameter["workspaceId"]}}/templates/{{$parameter["templateId"]}}',
+					headers: {
+						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
+					},
+				},
+			},
+		},
+	],
+	default: 'listTemplates',
+};

@@ -14,6 +14,7 @@ import { conversationOperations } from './properties/conversation/operations';
 import { campaignOperations } from './properties/campaign/operations';
 import { labelOperations } from './properties/label/operations';
 import { leadOperations } from './properties/lead/operations';
+import { templateOperations } from './properties/template/operations';
 
 export class Aimfox implements INodeType {
 	description: INodeTypeDescription = {
@@ -87,78 +88,7 @@ export class Aimfox implements INodeType {
 			campaignOperations,
 			labelOperations,
 			leadOperations,
-
-			// TEMPLATE OPERATIONS
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: {
-					show: {
-						resource: ['template'],
-					},
-				},
-				options: [
-					{
-						name: 'List Templates',
-						value: 'listTemplates',
-						action: 'List templates',
-						description: 'List all templates in the selected workspace',
-						routing: {
-							request: {
-								method: 'GET',
-								url: '=/workspaces/{{$parameter["workspaceId"]}}/templates',
-							},
-						},
-					},
-					{
-						name: 'Get Template',
-						value: 'getTemplate',
-						action: 'Get template',
-						description: 'Get a specific template by ID',
-						routing: {
-							request: {
-								method: 'GET',
-								url: '=/workspaces/{{$parameter["workspaceId"]}}/templates/{{$parameter["templateId"]}}',
-							},
-						},
-					},
-					{
-						name: 'Create Template',
-						value: 'createTemplate',
-						action: 'Create template',
-						description: 'Create a new template in the selected workspace',
-						routing: {
-							request: {
-								method: 'POST',
-								url: '=/workspaces/{{$parameter["workspaceId"]}}/templates',
-								body: {
-									name: '={{$parameter["templateName"]}}',
-									type: '={{$parameter["templateType"]}}',
-									subject: '={{$parameter["templateSubject"]}}',
-									message: '={{$parameter["templateMessage"]}}',
-									ai: '={{$parameter["templateAi"]}}',
-								},
-							},
-						},
-					},
-					{
-						name: 'Remove Template',
-						value: 'removeTemplate',
-						action: 'Remove template',
-						description: 'Remove a template from the workspace',
-						routing: {
-							request: {
-								method: 'DELETE',
-								url: '=/workspaces/{{$parameter["workspaceId"]}}/templates/{{$parameter["templateId"]}}',
-							},
-						},
-					},
-				],
-				default: 'listTemplates',
-			},
-
+			templateOperations,
 			...workspaceFields,
 			...blacklistFields,
 			...campaignFields,
