@@ -1,5 +1,4 @@
 import { INodeProperties } from 'n8n-workflow';
-import { workspaceFields } from './workspace/fields';
 
 const resourceOptions: INodeProperties = {
 	displayName: 'Trigger On',
@@ -55,4 +54,4 @@ const resourceOptions: INodeProperties = {
 	],
 };
 
-export const aimfoxTriggerProperties = [resourceOptions, ...workspaceFields];
+export const aimfoxTriggerProperties = [resourceOptions];

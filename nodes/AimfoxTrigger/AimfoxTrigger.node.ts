@@ -29,7 +29,7 @@ export class AimfoxTrigger implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: 'https://api.aimfox.dev/api/v1',
+			baseURL: 'https://api.aimfox.dev/api/v2',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -52,7 +52,6 @@ export class AimfoxTrigger implements INodeType {
 				const webhookUrl = this.getNodeWebhookUrl('default');
 				const webhookData = this.getWorkflowStaticData('node');
 				const events = this.getNodeParameter('events') as string[];
-				const workspaceId = this.getNodeParameter('workspaceId') as string;
 
 				const credentials = await this.getCredentials('aimfoxApi');
 
@@ -63,7 +62,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'GET' as const,
-					uri: `https://api.aimfox.dev/api/v1/workspaces/${workspaceId}/subscriptions`,
+					uri: `https://api.aimfox.dev/api/v2/webhooks`,
 					json: true,
 				};
 
@@ -84,7 +83,6 @@ export class AimfoxTrigger implements INodeType {
 				const webhookData = this.getWorkflowStaticData('node');
 				const webhookUrl = this.getNodeWebhookUrl('default');
 				const events = this.getNodeParameter('events');
-				const workspaceId = this.getNodeParameter('workspaceId') as string;
 
 				const credentials = await this.getCredentials('aimfoxApi');
 
@@ -95,7 +93,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'POST' as const,
-					uri: `https://api.aimfox.dev/api/v1/workspaces/${workspaceId}/subscriptions`,
+					uri: `https://api.aimfox.dev/api/v2/webhooks`,
 					body: {
 						events: events,
 						url: webhookUrl,
@@ -118,7 +116,6 @@ export class AimfoxTrigger implements INodeType {
 
 			async delete(this: IHookFunctions): Promise<boolean> {
 				const webhookData = this.getWorkflowStaticData('node');
-				const workspaceId = this.getNodeParameter('workspaceId') as string;
 
 				if (webhookData.webhookId !== undefined) {
 					try {
@@ -131,7 +128,7 @@ export class AimfoxTrigger implements INodeType {
 								'Content-Type': 'application/json',
 							},
 							method: 'DELETE' as const,
-							uri: `https://api.aimfox.dev/api/v1/workspaces/${workspaceId}/subscriptions/${webhookData.webhookId}`,
+							uri: `https://api.aimfox.dev/api/v2/webhooks/${webhookData.webhookId}`,
 							json: true,
 						};
 
