@@ -13,7 +13,6 @@ import { leadOperations } from './lead/operations';
 import { noteFields } from './note/fields';
 import { templateFields } from './template/fields';
 import { templateOperations } from './template/operations';
-import { workspaceFields } from './workspace/fields';
 
 const resourceOptions: INodeProperties = {
 	displayName: 'Resource',
@@ -62,7 +61,6 @@ export const aimfoxNodeProperties = [
 	labelOperations,
 	leadOperations,
 	templateOperations,
-	...workspaceFields,
 	...blacklistFields,
 	...campaignFields,
 	...conversationFields,
