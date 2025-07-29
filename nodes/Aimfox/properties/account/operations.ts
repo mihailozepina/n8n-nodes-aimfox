@@ -19,7 +19,7 @@ export const accountOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'GET',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/accounts',
+					url: '/accounts',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},

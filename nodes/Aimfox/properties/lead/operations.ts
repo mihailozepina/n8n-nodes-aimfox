@@ -19,7 +19,7 @@ export const leadOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'POST',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/leads/{{$parameter["leadId"]}}/labels/{{$parameter["labelId"]}}',
+					url: '=/leads/{{$parameter["leadId"]}}/labels/{{$parameter["labelId"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -34,7 +34,7 @@ export const leadOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'POST',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/leads/{{$parameter["leadId"]}}/notes',
+					url: '=/leads/{{$parameter["leadId"]}}/notes',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -52,7 +52,7 @@ export const leadOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'GET',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/leads/{{$parameter["leadId"]}}',
+					url: '=/leads/{{$parameter["leadId"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -67,7 +67,7 @@ export const leadOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'GET',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/recent-leads',
+					url: '/analytics/recent-leads',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -82,7 +82,7 @@ export const leadOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'DELETE',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/leads/{{$parameter["leadId"]}}/labels/{{$parameter["labelId"]}}',
+					url: '=/leads/{{$parameter["leadId"]}}/labels/{{$parameter["labelId"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},

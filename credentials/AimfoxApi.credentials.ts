@@ -4,7 +4,7 @@ export class AimfoxApi implements ICredentialType {
 	name = 'aimfoxApi';
 	displayName = 'Aimfox API';
 	documentationUrl =
-		'https://docs.n8n.io/integrations/creating-nodes/build/declarative-style-node/';
+		'https://docs.aimfox.com';
 	properties: INodeProperties[] = [
 		{
 			displayName: 'API Key',

@@ -19,7 +19,7 @@ export const blacklistOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'GET',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/blacklist',
+					url: '/blacklist',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -34,7 +34,7 @@ export const blacklistOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'POST',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/blacklist/{{$parameter["profileUrn"]}}',
+					url: '=/blacklist/{{$parameter["profileUrn"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -49,7 +49,7 @@ export const blacklistOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'DELETE',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/blacklist/{{$parameter["profileUrn"]}}',
+					url: '=/blacklist/{{$parameter["profileUrn"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},

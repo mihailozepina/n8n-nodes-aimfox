@@ -19,7 +19,7 @@ export const conversationOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'GET',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/conversations/{{$parameter["conversationUrn"]}}',
+					url: '=/accounts/{{$parameter["accountId"]}}/conversations/{{$parameter["conversationUrn"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -34,7 +34,7 @@ export const conversationOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'GET',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/accounts/{{$parameter["accountId"]}}/leads/{{$parameter["leadId"]}}/conversation-urn',
+					url: '=/accounts/{{$parameter["accountId"]}}/leads/{{$parameter["leadId"]}}/conversation',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -49,7 +49,7 @@ export const conversationOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'GET',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/conversations',
+					url: '/conversations',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -64,7 +64,7 @@ export const conversationOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'POST',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/accounts/{{$parameter["accountId"]}}/conversations/{{$parameter["conversationUrn"]}}/read',
+					url: '=/accounts/{{$parameter["accountId"]}}/conversations/{{$parameter["conversationUrn"]}}/mark-as-read',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -79,7 +79,7 @@ export const conversationOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'POST',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/accounts/{{$parameter["accountId"]}}/conversations/{{$parameter["conversationUrn"]}}',
+					url: '=/accounts/{{$parameter["accountId"]}}/conversations/{{$parameter["conversationUrn"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -97,7 +97,7 @@ export const conversationOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'POST',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/accounts/{{$parameter["accountId"]}}/conversations',
+					url: '=/accounts/{{$parameter["accountId"]}}/conversations',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},

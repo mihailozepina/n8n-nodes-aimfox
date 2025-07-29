@@ -20,7 +20,7 @@ export const campaignOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'POST',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns/{{$parameter["campaignId"]}}/audience',
+					url: '=/campaigns/{{$parameter["campaignId"]}}/audience',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -38,7 +38,7 @@ export const campaignOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'POST',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns/{{$parameter["campaignId"]}}/audience/multiple',
+					url: '=/campaigns/{{$parameter["campaignId"]}}/audience/multiple',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -62,7 +62,7 @@ export const campaignOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'GET',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns/{{$parameter["campaignId"]}}',
+					url: '=/campaigns/{{$parameter["campaignId"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -77,7 +77,7 @@ export const campaignOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'GET',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns',
+					url: '/campaigns',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -92,7 +92,7 @@ export const campaignOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'PATCH',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns/{{$parameter["campaignId"]}}',
+					url: '=/campaigns/{{$parameter["campaignId"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -110,7 +110,7 @@ export const campaignOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'PATCH',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns/{{$parameter["campaignId"]}}',
+					url: '=/campaigns/{{$parameter["campaignId"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},

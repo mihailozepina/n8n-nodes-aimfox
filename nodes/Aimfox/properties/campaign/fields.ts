@@ -17,16 +17,13 @@ export const campaignFields: INodeProperties[] = [
 					'addProfileToCampaignWithCustomVariables',
 				],
 			},
-			hide: {
-				workspaceId: [''],
-			},
 		},
 		typeOptions: {
 			loadOptions: {
 				routing: {
 					request: {
 						method: 'GET',
-						url: '=/workspaces/{{$parameter["workspaceId"]}}/campaigns',
+						url: '/campaigns',
 					},
 					output: {
 						postReceive: [
@@ -47,7 +44,6 @@ export const campaignFields: INodeProperties[] = [
 					},
 				},
 			},
-			loadOptionsDependsOn: ['workspaceId'],
 		},
 		default: '',
 		description:

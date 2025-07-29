@@ -25,6 +25,7 @@ export const conversationFields: INodeProperties[] = [
 			show: {
 				resource: ['conversation'],
 				operation: [
+					'getConversation',
 					'getLeadConversation',
 					'startConversation',
 					'sendMessageToConversation',

@@ -19,7 +19,7 @@ export const templateOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'GET',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/templates',
+					url: '/templates',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -34,7 +34,7 @@ export const templateOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'GET',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/templates/{{$parameter["templateId"]}}',
+					url: '=/templates/{{$parameter["templateId"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -49,7 +49,7 @@ export const templateOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'POST',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/templates',
+					url: '/templates',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
@@ -71,7 +71,7 @@ export const templateOperations: INodeProperties = {
 			routing: {
 				request: {
 					method: 'DELETE',
-					url: '=/workspaces/{{$parameter["workspaceId"]}}/templates/{{$parameter["templateId"]}}',
+					url: '=/templates/{{$parameter["templateId"]}}',
 					headers: {
 						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
 					},
