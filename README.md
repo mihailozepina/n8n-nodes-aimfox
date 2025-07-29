@@ -1,48 +1,99 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# n8n-nodes-aimfox
 
-# n8n-nodes-starter
+This is an n8n community node. It lets you use Aimfox in your n8n workflows.
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+Aimfox is a LinkedIn automation platform that helps businesses automate their LinkedIn outreach, lead generation, and social selling activities.
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+[n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+[Installation](#installation)
+[Operations](#operations)
+[Credentials](#credentials)
+[Compatibility](#compatibility)
+[Usage](#usage)
+[Resources](#resources)
 
-## Prerequisites
+## Installation
 
-You need the following installed on your development machine:
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+## Operations
 
-## Using this starter
+This node supports the following operations:
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+### Account
+- **List Accounts**: List all accounts in the workspace
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+### Blacklist
+- **List Blacklisted Accounts**: List all blacklisted accounts in the workspace
+- **Add Profile to Blacklist**: Add profile to the blacklist using the profile URN
+- **Remove Profile From Blacklist**: Remove profile from the blacklist using the profile URN
 
-## More information
+### Campaign
+- **Add Profile to Campaign**: Add profile to the selected campaign
+- **Add Profile to Campaign with Custom Variables**: Add profile to the selected campaign with custom variables
+- **Get Campaign**: Get a specific campaign by ID
+- **List Campaigns**: List all campaigns in the workspace
+- **Pause**: Pause a running campaign
+- **Resume**: Resume a paused campaign
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+### Conversation
+- **Get Conversation**: Get a specific conversation by URN
+- **Get Lead Conversation**: Get a specific lead conversation URN
+- **List Conversations**: List all conversations for the selected workspace
+- **Mark Conversation As Read**: Mark an existing conversation as read
+- **Send Message To Conversation**: Send a message to an existing conversation
+- **Start Conversation**: Start a new conversation with the lead
 
-## License
+### Label
+- **List Labels**: List all labels for the selected workspace
+- **Add Label**: Add a new label to the selected workspace
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+### Lead
+- **Add Label To Lead**: Add a new label to the selected lead
+- **Add Note To Lead**: Add a new note to the selected lead
+- **Get Lead**: Get a specific lead by ID
+- **List Recent Leads**: List recent leads for the selected workspace
+- **Remove Label From Lead**: Remove a label from the selected lead
+
+### Templates
+- **List Templates**: List all templates in the selected workspace
+- **Get Template**: Get a specific template by ID
+- **Create Template**: Create a new template in the selected workspace
+- **Remove Template**: Remove a template from the selected workspace
+
+## Credentials
+
+To use this node, you need to authenticate with Aimfox using an API key.
+
+### Prerequisites
+1. Sign up for an Aimfox account at [https://aimfox.dev](https://aimfox.dev)
+2. Generate an API key from your Aimfox dashboard
+
+### Setup
+1. In n8n, go to **Settings** > **Credentials**
+2. Click **Create New Credential**
+3. Search for "Aimfox API" and select it
+4. Enter your Aimfox API key
+5. Click **Save**
+
+The API key will be used to authenticate all requests to the Aimfox API with Bearer token authentication.
+
+## Compatibility
+
+- Minimum n8n version: 0.198.0
+- Tested with n8n versions: 0.198.0+
+
+## Usage
+
+### Basic Workflow Example
+1. Start with a **Manual Trigger** or **Schedule Trigger**
+2. Add the **Aimfox** node
+3. Select your workspace first (required for most operations)
+4. Choose your desired operation (Account, Campaign, Profile, or Workspace)
+5. Configure the specific operation parameters
+
+## Resources
+
+* [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
+* [Aimfox API documentation](https://docs.aimfox.com)

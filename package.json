@@ -1,12 +1,12 @@
 {
   "name": "n8n-nodes-aimfox",
   "version": "0.1.0",
-  "description": "",
+  "description": "n8n nodes for Aimfox",
   "keywords": [
     "n8n-community-node-package"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://aimfox.com/",
   "author": {
     "name": "Mihailo Zepina",
     "email": "mihailo.zepina@constel.co"
