@@ -62,6 +62,21 @@ This node supports the following operations:
 - **Create Template**: Create a new template in the selected workspace
 - **Remove Template**: Remove a template from the selected workspace
 
+## Triggers
+
+This node supports the following triggers:
+- **Account Logged In**: This event triggers when a LinkedIn profile successfully logs into the system.
+- **Account Logged Out**: This event triggers when a LinkedIn profile is logged out of the system.
+- **Connect Accepted**: This event triggers when a LinkedIn connection request is accepted, establishing a new connection between profiles.
+- **Connect Sent**: This event triggers when a LinkedIn connection request is successfully sent.
+- **Inmail Reply**: This event triggers when a user replies to a LinkedIn Inmail message, initiating a conversation.
+- **Inmail**: This event triggers when a LinkedIn Inmail message is successfully sent.
+- **Message Request**: This event triggers when a message request is sent.
+- **Message Sent**: This event triggers when a message is successfully sent to a LinkedIn profile.
+- **New Connection**: This event triggers when a new connection is acquired through Aimfox, indicating the successful addition of a LinkedIn connection.
+- **New Reply**: This event triggers when a user replies to a LinkedIn message, initiating a conversation.
+- **Profile Viewed**: This event triggers when a LinkedIn profile is viewed.
+
 ## Credentials
 
 To use this node, you need to authenticate with Aimfox using an API key.
