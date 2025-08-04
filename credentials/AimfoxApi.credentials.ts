@@ -1,4 +1,4 @@
-import { IAuthenticateGeneric, ICredentialType, INodeProperties } from 'n8n-workflow';
+import { IAuthenticateGeneric, ICredentialType, INodeProperties, ICredentialTestRequest } from 'n8n-workflow';
 
 export class AimfoxApi implements ICredentialType {
 	name = 'aimfoxApi';
@@ -20,6 +20,12 @@ export class AimfoxApi implements ICredentialType {
 			headers: {
 				Authorization: '={{"Bearer " + $credentials.apiKey}}'
 			},
+		},
+	};
+	test: ICredentialTestRequest = {
+		request: {
+			baseURL: 'https://api.aimfox.com/api/v2',
+			url: 'accounts',
 		},
 	};
 }
