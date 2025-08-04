@@ -29,7 +29,7 @@ export class AimfoxTrigger implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: 'https://api.aimfox.dev/api/v2',
+			baseURL: 'https://api.aimfox.com/api/v2',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'GET' as const,
-					uri: `https://api.aimfox.dev/api/v2/webhooks`,
+					uri: `https://api.aimfox.com/api/v2/webhooks`,
 					json: true,
 				};
 
@@ -93,7 +93,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'POST' as const,
-					uri: `https://api.aimfox.dev/api/v2/webhooks`,
+					uri: `https://api.aimfox.com/api/v2/webhooks`,
 					body: {
 						events: events,
 						url: webhookUrl,
@@ -128,7 +128,7 @@ export class AimfoxTrigger implements INodeType {
 								'Content-Type': 'application/json',
 							},
 							method: 'DELETE' as const,
-							uri: `https://api.aimfox.dev/api/v2/webhooks/${webhookData.webhookId}`,
+							uri: `https://api.aimfox.com/api/v2/webhooks/${webhookData.webhookId}`,
 							json: true,
 						};
 

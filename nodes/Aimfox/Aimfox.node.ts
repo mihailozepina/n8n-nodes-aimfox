@@ -22,7 +22,7 @@ export class Aimfox implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: 'https://api.aimfox.dev/api/v2',
+			baseURL: 'https://api.aimfox.com/api/v2',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',

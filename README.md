@@ -67,7 +67,7 @@ This node supports the following operations:
 To use this node, you need to authenticate with Aimfox using an API key.
 
 ### Prerequisites
-1. Sign up for an Aimfox account at [https://aimfox.dev](https://aimfox.dev)
+1. Sign up for an Aimfox account at [https://aimfox.com](https://aimfox.com)
 2. Generate an API key from your Aimfox dashboard
 
 ### Setup
