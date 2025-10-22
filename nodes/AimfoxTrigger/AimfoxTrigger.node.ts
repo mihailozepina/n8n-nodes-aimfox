@@ -69,7 +69,9 @@ export class AimfoxTrigger implements INodeType {
 				const responseData = await this.helpers.request.call(this, options);
 
 				for (const webhook of responseData.webhooks) {
-					if (webhook.url === webhookUrl && webhook.events === events) {
+					const eventsMatch = JSON.stringify(webhook.events.sort()) === JSON.stringify(events.sort());
+
+					if (webhook.url === webhookUrl && eventsMatch) {
 						webhookData.webhookId = webhook.id;
 
 						return true;
