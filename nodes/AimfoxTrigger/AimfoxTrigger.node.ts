@@ -59,7 +59,6 @@ export class AimfoxTrigger implements INodeType {
 					headers: {
 						Authorization: `Bearer ${credentials.apiKey}`,
 						Accept: 'application/json',
-						'Content-Type': 'application/json',
 					},
 					method: 'GET' as const,
 					url: `https://api.aimfox.com/api/v2/webhooks?integration=true`,
