@@ -62,7 +62,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'GET' as const,
-					uri: `https://api.aimfox.com/api/v2/webhooks`,
+					uri: `https://api.aimfox.com/api/v2/webhooks?integration=true`,
 					json: true,
 				};
 
