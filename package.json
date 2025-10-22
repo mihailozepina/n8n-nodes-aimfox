@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-aimfox",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "n8n nodes for Aimfox",
   "keywords": [
     "n8n-community-node-package"
