@@ -49,9 +49,11 @@ export class AimfoxTrigger implements INodeType {
 	webhookMethods = {
 		default: {
 			async checkExists(this: IHookFunctions): Promise<boolean> {
-				const webhookUrl = this.getNodeWebhookUrl('default');
 				const webhookData = this.getWorkflowStaticData('node');
-				const events = this.getNodeParameter('events') as string[];
+
+				if (webhookData.webhookId === undefined) {
+					return false;
+				}
 
 				const credentials = await this.getCredentials('aimfoxApi');
 
@@ -67,13 +69,11 @@ export class AimfoxTrigger implements INodeType {
 
 				const responseData = await this.helpers.request.call(this, options);
 
-				for (const webhook of responseData.webhooks) {
-					const eventsMatch = JSON.stringify(webhook.events.sort()) === JSON.stringify(events.sort());
-
-					if (webhook.url === webhookUrl && eventsMatch) {
-						webhookData.webhookId = webhook.id;
-
-						return true;
+				if (Array.isArray(responseData.webhooks)) {
+					for (const webhook of responseData.webhooks) {
+						if (webhook.id === webhookData.webhookId) {
+							return true;
+						}
 					}
 				}
 
