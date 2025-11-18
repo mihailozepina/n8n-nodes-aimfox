@@ -5,6 +5,7 @@ import {
 	type INodeTypeDescription,
 	type IWebhookResponseData,
 	NodeConnectionType,
+	IDataObject,
 } from 'n8n-workflow';
 
 import { aimfoxTriggerProperties } from './properties';
@@ -147,10 +148,10 @@ export class AimfoxTrigger implements INodeType {
 	};
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
-		const body = this.getBodyData();
+		const req = this.getRequestObject();
 
 		return {
-			workflowData: [this.helpers.returnJsonArray(body)],
+			workflowData: [this.helpers.returnJsonArray(req.body as IDataObject[])],
 		};
 	}
 }
