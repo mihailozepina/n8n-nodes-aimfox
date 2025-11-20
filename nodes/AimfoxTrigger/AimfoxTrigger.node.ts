@@ -29,13 +29,6 @@ export class AimfoxTrigger implements INodeType {
 				required: true,
 			},
 		],
-		requestDefaults: {
-			baseURL: 'https://api.aimfox.com/api/v2',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		},
 		webhooks: [
 			{
 				name: 'default',
