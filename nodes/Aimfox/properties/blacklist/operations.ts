@@ -20,9 +20,7 @@ export const blacklistOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '/blacklist',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -35,9 +33,7 @@ export const blacklistOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '=/blacklist/{{$parameter["profileUrn"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -50,9 +46,7 @@ export const blacklistOperations: INodeProperties = {
 				request: {
 					method: 'DELETE',
 					url: '=/blacklist/{{$parameter["profileUrn"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},

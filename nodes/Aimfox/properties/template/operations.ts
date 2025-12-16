@@ -20,9 +20,7 @@ export const templateOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '/templates',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -35,9 +33,7 @@ export const templateOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '=/templates/{{$parameter["templateId"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -50,9 +46,7 @@ export const templateOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '/templates',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 					body: {
 						name: '={{$parameter["templateName"]}}',
 						type: '={{$parameter["templateType"]}}',
@@ -72,9 +66,7 @@ export const templateOperations: INodeProperties = {
 				request: {
 					method: 'DELETE',
 					url: '=/templates/{{$parameter["templateId"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},

@@ -20,9 +20,7 @@ export const conversationOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '=/accounts/{{$parameter["accountId"]}}/conversations/{{$parameter["conversationUrn"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -35,9 +33,7 @@ export const conversationOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '=/accounts/{{$parameter["accountId"]}}/leads/{{$parameter["leadId"]}}/conversation',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -50,9 +46,7 @@ export const conversationOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '/conversations',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -65,9 +59,7 @@ export const conversationOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '=/accounts/{{$parameter["accountId"]}}/conversations/{{$parameter["conversationUrn"]}}/mark-as-read',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -80,9 +72,7 @@ export const conversationOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '=/accounts/{{$parameter["accountId"]}}/conversations/{{$parameter["conversationUrn"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 					body: {
 						message: '={{$parameter["conversationMessage"]}}',
 					},
@@ -98,9 +88,7 @@ export const conversationOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '=/accounts/{{$parameter["accountId"]}}/conversations',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 					body: {
 						message: '={{$parameter["conversationMessage"]}}',
 						recipients: ['={{$parameter["leadId"]}}'],

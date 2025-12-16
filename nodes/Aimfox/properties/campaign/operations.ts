@@ -21,9 +21,7 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '=/campaigns/{{$parameter["campaignId"]}}/audience',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 					body: {
 						profile_url: '={{$parameter["profileUrl"]}}',
 					},
@@ -39,9 +37,7 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '=/campaigns/{{$parameter["campaignId"]}}/audience/multiple',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 					body: {
 						type: 'profile_url',
 						profiles: [
@@ -63,9 +59,7 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '=/campaigns/{{$parameter["campaignId"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -78,9 +72,7 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '/campaigns',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -93,9 +85,7 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'PATCH',
 					url: '=/campaigns/{{$parameter["campaignId"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 					body: {
 						state: 'PAUSED',
 					},
@@ -111,9 +101,7 @@ export const campaignOperations: INodeProperties = {
 				request: {
 					method: 'PATCH',
 					url: '=/campaigns/{{$parameter["campaignId"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 					body: {
 						state: 'ACTIVE',
 					},

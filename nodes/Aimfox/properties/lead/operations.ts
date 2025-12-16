@@ -20,9 +20,7 @@ export const leadOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '=/leads/{{$parameter["leadId"]}}/labels/{{$parameter["labelId"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -35,9 +33,7 @@ export const leadOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '=/leads/{{$parameter["leadId"]}}/notes',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 					body: {
 						text: '={{$parameter["noteText"]}}',
 					},
@@ -53,9 +49,7 @@ export const leadOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '=/leads/{{$parameter["leadId"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -68,9 +62,7 @@ export const leadOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '/analytics/recent-leads',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -83,9 +75,7 @@ export const leadOperations: INodeProperties = {
 				request: {
 					method: 'DELETE',
 					url: '=/leads/{{$parameter["leadId"]}}/labels/{{$parameter["labelId"]}}',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},

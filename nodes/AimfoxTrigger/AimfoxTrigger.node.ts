@@ -4,7 +4,7 @@ import {
 	type INodeType,
 	type INodeTypeDescription,
 	type IWebhookResponseData,
-	NodeConnectionType,
+	NodeConnectionTypes,
 	IDataObject,
 } from 'n8n-workflow';
 
@@ -22,7 +22,7 @@ export class AimfoxTrigger implements INodeType {
 			name: 'Aimfox Trigger',
 		},
 		inputs: [],
-		outputs: [NodeConnectionType.Main],
+		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
 				name: 'aimfoxApi',
@@ -49,11 +49,8 @@ export class AimfoxTrigger implements INodeType {
 					return false;
 				}
 
-				const credentials = await this.getCredentials('aimfoxApi');
-
 				const options = {
 					headers: {
-						Authorization: `Bearer ${credentials.apiKey}`,
 						Accept: 'application/json',
 					},
 					method: 'GET' as const,
@@ -61,7 +58,7 @@ export class AimfoxTrigger implements INodeType {
 					json: true,
 				};
 
-				const responseData = await this.helpers.request.call(this, options);
+				const responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'aimfoxApi', options);
 
 				if (Array.isArray(responseData.webhooks)) {
 					for (const webhook of responseData.webhooks) {
@@ -79,11 +76,8 @@ export class AimfoxTrigger implements INodeType {
 				const webhookUrl = this.getNodeWebhookUrl('default');
 				const events = this.getNodeParameter('events');
 
-				const credentials = await this.getCredentials('aimfoxApi');
-
 				const options = {
 					headers: {
-						Authorization: `Bearer ${credentials.apiKey}`,
 						Accept: 'application/json',
 						'Content-Type': 'application/json',
 					},
@@ -98,7 +92,7 @@ export class AimfoxTrigger implements INodeType {
 					json: true,
 				};
 
-				const responseData = await this.helpers.request.call(this, options);
+				const responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'aimfoxApi', options);
 
 				if (responseData.webhook.id === undefined) {
 					return false;
@@ -114,11 +108,8 @@ export class AimfoxTrigger implements INodeType {
 
 				if (webhookData.webhookId !== undefined) {
 					try {
-						const credentials = await this.getCredentials('aimfoxApi');
-
 						const options = {
 							headers: {
-								Authorization: `Bearer ${credentials.apiKey}`,
 								Accept: 'application/json',
 								'Content-Type': 'application/json',
 							},
@@ -127,7 +118,7 @@ export class AimfoxTrigger implements INodeType {
 							json: true,
 						};
 
-						await this.helpers.request.call(this, options);
+						await this.helpers.httpRequestWithAuthentication.call(this, 'aimfoxApi', options);
 					} catch (error) {
 						return false;
 					}

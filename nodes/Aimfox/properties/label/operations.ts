@@ -20,9 +20,7 @@ export const labelOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '/labels',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},
@@ -35,9 +33,7 @@ export const labelOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '/labels',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 					body: {
 						name: '={{$parameter["labelName"]}}',
 						color: '={{$parameter["labelColor"]}}',

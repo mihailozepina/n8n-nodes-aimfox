@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-aimfox",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "n8n nodes for Aimfox",
   "keywords": [
     "n8n-community-node-package"
@@ -41,7 +41,6 @@
     "@typescript-eslint/parser": "~5.45",
     "eslint-plugin-n8n-nodes-base": "^1.11.0",
     "gulp": "^4.0.2",
-    "n8n-workflow": "*",
     "prettier": "^2.7.1",
     "typescript": "~4.8.4"
   },

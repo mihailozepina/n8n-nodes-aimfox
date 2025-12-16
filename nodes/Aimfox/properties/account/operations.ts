@@ -20,9 +20,7 @@ export const accountOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '/accounts',
-					headers: {
-						Authorization: '={{"Bearer " + $credentials.aimfoxApi.apiKey}}',
-					},
+					headers: {},
 				},
 			},
 		},

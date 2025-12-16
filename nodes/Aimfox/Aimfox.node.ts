@@ -1,4 +1,4 @@
-import { INodeType, INodeTypeDescription, NodeConnectionType } from 'n8n-workflow';
+import { INodeType, INodeTypeDescription, NodeConnectionTypes } from 'n8n-workflow';
 import { aimfoxNodeProperties } from './properties';
 
 export class Aimfox implements INodeType {
@@ -13,8 +13,8 @@ export class Aimfox implements INodeType {
 		defaults: {
 			name: 'Aimfox',
 		},
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
+		inputs: [NodeConnectionTypes.Main],
+		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
 				name: 'aimfoxApi',
