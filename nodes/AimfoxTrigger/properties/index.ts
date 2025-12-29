@@ -16,6 +16,22 @@ const resourceOptions: INodeProperties = {
 			value: 'account_logged_out',
 		},
 		{
+			name: 'Campaign Created Event',
+			value: 'campaign_created',
+		},
+		{
+			name: 'Campaign Ended Event',
+			value: 'campaign_ended',
+		},
+		{
+			name: 'Campaign Reply',
+			value: 'campaign_reply',
+		},
+		{
+			name: 'Campaign Started Event',
+			value: 'campaign_started',
+		},
+		{
 			name: 'Connect Accepted Event',
 			value: 'accepted',
 		},
@@ -24,12 +40,20 @@ const resourceOptions: INodeProperties = {
 			value: 'connect',
 		},
 		{
+			name: 'Inbox Event',
+			value: 'inbox_event',
+		},
+		{
 			name: 'Inmail Reply Event',
 			value: 'inmail_reply',
 		},
 		{
 			name: 'Inmail Sent Event',
 			value: 'inmail',
+		},
+		{
+			name: 'Lead Label Added Event',
+			value: 'lead_label_added',
 		},
 		{
 			name: 'Message Request Sent Event',
@@ -45,11 +69,15 @@ const resourceOptions: INodeProperties = {
 		},
 		{
 			name: 'New Reply Event',
-			value: 'reply',
+			value: 'new_reply',
 		},
 		{
 			name: 'Profile Viewed Event',
 			value: 'view',
+		},
+		{
+			name: 'Reply Event',
+			value: 'reply',
 		},
 	],
 };
