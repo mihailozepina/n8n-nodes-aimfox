@@ -12,6 +12,19 @@ export const accountOperations: INodeProperties = {
 	},
 	options: [
 		{
+			name: 'Get Account Limits',
+			value: 'getAccountLimits',
+			action: 'Get account limits',
+			description: 'Get the interaction limits for a specific account',
+			routing: {
+				request: {
+					method: 'GET',
+					url: '=/accounts/{{$parameter["accountId"]}}/limits',
+					headers: {},
+				},
+			},
+		},
+		{
 			name: 'List Accounts',
 			value: 'listAccounts',
 			action: 'List accounts',
@@ -21,6 +34,24 @@ export const accountOperations: INodeProperties = {
 					method: 'GET',
 					url: '/accounts',
 					headers: {},
+				},
+			},
+		},
+		{
+			name: 'Set Account Limits',
+			value: 'setAccountLimits',
+			action: 'Set account limits',
+			description: 'Update the weekly interaction limits for an account',
+			routing: {
+				request: {
+					method: 'PATCH',
+					url: '=/accounts/{{$parameter["accountId"]}}/limits',
+					headers: {},
+					body: {
+						connect: '={{$parameter["connectLimit"]}}',
+						message_request: '={{$parameter["messageRequestLimit"]}}',
+						inmail: '={{$parameter["inmailLimit"]}}',
+					},
 				},
 			},
 		},

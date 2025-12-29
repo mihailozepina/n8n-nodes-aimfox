@@ -12,15 +12,18 @@ export const blacklistOperations: INodeProperties = {
 	},
 	options: [
 		{
-			name: 'List Blacklisted Accounts',
-			value: 'listBlacklist',
-			action: 'List blacklist',
-			description: 'List all blacklisted accounts in the workspace',
+			name: 'Add Companies to Blacklist',
+			value: 'addCompaniesToBlacklist',
+			action: 'Add companies to blacklist',
+			description: 'Add multiple LinkedIn companies to the blacklist',
 			routing: {
 				request: {
-					method: 'GET',
-					url: '/blacklist',
+					method: 'POST',
+					url: '/blacklist-companies',
 					headers: {},
+					body: {
+						companies: '={{$parameter["companyUrls"].split(",").map(url => url.trim())}}',
+					},
 				},
 			},
 		},
@@ -33,6 +36,45 @@ export const blacklistOperations: INodeProperties = {
 				request: {
 					method: 'POST',
 					url: '=/blacklist/{{$parameter["profileUrn"]}}',
+					headers: {},
+				},
+			},
+		},
+		{
+			name: 'List Blacklisted Companies',
+			value: 'listBlacklistedCompanies',
+			action: 'List blacklisted companies',
+			description: 'List all blacklisted LinkedIn companies in the workspace',
+			routing: {
+				request: {
+					method: 'GET',
+					url: '/blacklist-companies',
+					headers: {},
+				},
+			},
+		},
+		{
+			name: 'List Blacklisted Profiles',
+			value: 'listBlacklist',
+			action: 'List blacklisted profiles',
+			description: 'List all blacklisted profiles in the workspace',
+			routing: {
+				request: {
+					method: 'GET',
+					url: '/blacklist',
+					headers: {},
+				},
+			},
+		},
+		{
+			name: 'Remove Company From Blacklist',
+			value: 'removeCompanyFromBlacklist',
+			action: 'Remove company from blacklist',
+			description: 'Remove a LinkedIn company from the blacklist using the company URN',
+			routing: {
+				request: {
+					method: 'DELETE',
+					url: '=/blacklist-companies/{{$parameter["companyUrn"]}}',
 					headers: {},
 				},
 			},

@@ -1,4 +1,5 @@
 import { INodeProperties } from 'n8n-workflow';
+import { accountFields } from './account/fields';
 import { accountOperations } from './account/operations';
 import { blacklistFields } from './blacklist/fields';
 import { blacklistOperations } from './blacklist/operations';
@@ -6,6 +7,8 @@ import { campaignFields } from './campaign/fields';
 import { campaignOperations } from './campaign/operations';
 import { conversationFields } from './conversation/fields';
 import { conversationOperations } from './conversation/operations';
+import { customVariableFields } from './customVariable/fields';
+import { customVariableOperations } from './customVariable/operations';
 import { labelFields } from './label/fields';
 import { labelOperations } from './label/operations';
 import { leadFields } from './lead/fields';
@@ -37,6 +40,10 @@ const resourceOptions: INodeProperties = {
 			value: 'conversation',
 		},
 		{
+			name: 'Custom Variable',
+			value: 'customVariable',
+		},
+		{
 			name: 'Label',
 			value: 'label',
 		},
@@ -58,12 +65,15 @@ export const aimfoxNodeProperties = [
 	blacklistOperations,
 	conversationOperations,
 	campaignOperations,
+	customVariableOperations,
 	labelOperations,
 	leadOperations,
 	templateOperations,
+	...accountFields,
 	...blacklistFields,
 	...campaignFields,
 	...conversationFields,
+	...customVariableFields,
 	...labelFields,
 	...leadFields,
 	...noteFields,

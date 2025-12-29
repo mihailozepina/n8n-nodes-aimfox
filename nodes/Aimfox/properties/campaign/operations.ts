@@ -51,6 +51,26 @@ export const campaignOperations: INodeProperties = {
 			},
 		},
 		{
+			name: 'Create Campaign',
+			value: 'createCampaign',
+			action: 'Create a campaign',
+			description: 'Create a new Aimfox campaign',
+			routing: {
+				request: {
+					method: 'POST',
+					url: '/campaigns',
+					headers: {},
+					body: {
+						name: '={{$parameter["campaignName"]}}',
+						type: '={{$parameter["campaignType"]}}',
+						outreach_type: '={{$parameter["outreachType"]}}',
+						audience_size: '={{$parameter["audienceSize"]}}',
+						account_ids: '={{$parameter["accountIds"].split(",").map(id => id.trim())}}',
+					},
+				},
+			},
+		},
+		{
 			name: 'Get Campaign',
 			value: 'getCampaign',
 			action: 'Get a campaign',
@@ -89,6 +109,19 @@ export const campaignOperations: INodeProperties = {
 					body: {
 						state: 'PAUSED',
 					},
+				},
+			},
+		},
+		{
+			name: 'Remove Profile From Campaign',
+			value: 'removeProfileFromCampaign',
+			action: 'Remove profile from campaign',
+			description: 'Remove a profile from the selected campaign using URN or public identifier',
+			routing: {
+				request: {
+					method: 'DELETE',
+					url: '=/campaigns/{{$parameter["campaignId"]}}/audience/{{$parameter["profileUrnOrIdentifier"]}}',
+					headers: {},
 				},
 			},
 		},

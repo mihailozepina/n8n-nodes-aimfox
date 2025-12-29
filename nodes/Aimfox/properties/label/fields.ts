@@ -17,18 +17,33 @@ export const labelFields: INodeProperties[] = [
 		required: true,
 	},
 	{
+		displayName: 'Label ID',
+		name: 'workspaceLabelId',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['label'],
+				operation: ['editLabel', 'deleteLabel'],
+			},
+		},
+		default: '',
+		placeholder: '83b3aa1d-cda0-42b3-845c-afccf1192dc5',
+		description: 'The ID of the label to edit or delete',
+		required: true,
+	},
+	{
 		displayName: 'Label Name',
 		name: 'labelName',
 		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['label'],
-				operation: ['addLabel'],
+				operation: ['addLabel', 'editLabel'],
 			},
 		},
 		default: '',
 		placeholder: 'Label Name',
-		description: 'The name of the label to add',
+		description: 'The name of the label',
 		required: true,
 	},
 	{
@@ -38,7 +53,7 @@ export const labelFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['label'],
-				operation: ['addLabel'],
+				operation: ['addLabel', 'editLabel'],
 			},
 		},
 		options: [
@@ -50,7 +65,7 @@ export const labelFields: INodeProperties[] = [
 			{ name: 'Yellow', value: 'yellow' },
 		],
 		default: 'info',
-		description: 'The color of the label to add',
+		description: 'The color of the label',
 		required: true,
 	},
 ];

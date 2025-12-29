@@ -8,12 +8,27 @@ export const noteFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['lead'],
-				operation: ['addNoteToLead'],
+				operation: ['addNoteToLead', 'updateNote'],
 			},
 		},
 		default: '',
 		placeholder: 'Note text',
-		description: 'The text of the note to add to the lead',
+		description: 'The text of the note',
+		required: true,
+	},
+	{
+		displayName: 'Note ID',
+		name: 'noteId',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['lead'],
+				operation: ['updateNote', 'deleteNoteFromLead'],
+			},
+		},
+		default: '',
+		placeholder: '48ae319e-e276-4492-bacd-2eb064230c97',
+		description: 'The ID of the note',
 		required: true,
 	},
 ];

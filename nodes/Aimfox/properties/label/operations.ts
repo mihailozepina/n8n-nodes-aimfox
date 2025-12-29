@@ -12,19 +12,6 @@ export const labelOperations: INodeProperties = {
 	},
 	options: [
 		{
-			name: 'List Labels',
-			value: 'listLabels',
-			action: 'List labels',
-			description: 'List all labels for the selected workspace',
-			routing: {
-				request: {
-					method: 'GET',
-					url: '/labels',
-					headers: {},
-				},
-			},
-		},
-		{
 			name: 'Add Label',
 			value: 'addLabel',
 			action: 'Add label',
@@ -38,6 +25,49 @@ export const labelOperations: INodeProperties = {
 						name: '={{$parameter["labelName"]}}',
 						color: '={{$parameter["labelColor"]}}',
 					},
+				},
+			},
+		},
+		{
+			name: 'Delete Label',
+			value: 'deleteLabel',
+			action: 'Delete label',
+			description: 'Delete a label from the workspace',
+			routing: {
+				request: {
+					method: 'DELETE',
+					url: '=/labels/{{$parameter["workspaceLabelId"]}}',
+					headers: {},
+				},
+			},
+		},
+		{
+			name: 'Edit Label',
+			value: 'editLabel',
+			action: 'Edit label',
+			description: 'Edit an existing label in the workspace',
+			routing: {
+				request: {
+					method: 'PATCH',
+					url: '=/labels/{{$parameter["workspaceLabelId"]}}',
+					headers: {},
+					body: {
+						name: '={{$parameter["labelName"]}}',
+						color: '={{$parameter["labelColor"]}}',
+					},
+				},
+			},
+		},
+		{
+			name: 'List Labels',
+			value: 'listLabels',
+			action: 'List labels',
+			description: 'List all labels for the selected workspace',
+			routing: {
+				request: {
+					method: 'GET',
+					url: '/labels',
+					headers: {},
 				},
 			},
 		},

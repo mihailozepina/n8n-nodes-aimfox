@@ -41,6 +41,19 @@ export const leadOperations: INodeProperties = {
 			},
 		},
 		{
+			name: 'Delete Note From Lead',
+			value: 'deleteNoteFromLead',
+			action: 'Delete note from lead',
+			description: 'Delete a note from the selected lead',
+			routing: {
+				request: {
+					method: 'DELETE',
+					url: '=/leads/{{$parameter["leadId"]}}/notes/{{$parameter["noteId"]}}',
+					headers: {},
+				},
+			},
+		},
+		{
 			name: 'Get Lead',
 			value: 'getLead',
 			action: 'Get lead',
@@ -49,6 +62,32 @@ export const leadOperations: INodeProperties = {
 				request: {
 					method: 'GET',
 					url: '=/leads/{{$parameter["leadId"]}}',
+					headers: {},
+				},
+			},
+		},
+		{
+			name: 'Get Lead Custom Variables',
+			value: 'getLeadCustomVariables',
+			action: 'Get lead custom variables',
+			description: 'Get custom variables for a specific lead',
+			routing: {
+				request: {
+					method: 'GET',
+					url: '=/accounts/{{$parameter["accountId"]}}/leads/{{$parameter["leadUrn"]}}/custom-variables',
+					headers: {},
+				},
+			},
+		},
+		{
+			name: 'List Lead Notes',
+			value: 'listLeadNotes',
+			action: 'List lead notes',
+			description: 'List all notes for the selected lead',
+			routing: {
+				request: {
+					method: 'GET',
+					url: '=/leads/{{$parameter["leadId"]}}/notes',
 					headers: {},
 				},
 			},
@@ -76,6 +115,22 @@ export const leadOperations: INodeProperties = {
 					method: 'DELETE',
 					url: '=/leads/{{$parameter["leadId"]}}/labels/{{$parameter["labelId"]}}',
 					headers: {},
+				},
+			},
+		},
+		{
+			name: 'Update Note',
+			value: 'updateNote',
+			action: 'Update note',
+			description: 'Update a note for the selected lead',
+			routing: {
+				request: {
+					method: 'PATCH',
+					url: '=/leads/{{$parameter["leadId"]}}/notes/{{$parameter["noteId"]}}',
+					headers: {},
+					body: {
+						text: '={{$parameter["noteText"]}}',
+					},
 				},
 			},
 		},
