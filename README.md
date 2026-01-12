@@ -24,19 +24,26 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 This node supports the following operations:
 
 ### Account
+- **Get Account Limits**: Get the interaction limits for a specific account
 - **List Accounts**: List all accounts in the workspace
+- **Set Account Limits**: Update the weekly interaction limits for an account
 
 ### Blacklist
-- **List Blacklisted Accounts**: List all blacklisted accounts in the workspace
+- **Add Companies to Blacklist**: Add multiple LinkedIn companies to the blacklist
 - **Add Profile to Blacklist**: Add profile to the blacklist using the profile URN
+- **List Blacklisted Companies**: List all blacklisted LinkedIn companies in the workspace
+- **List Blacklisted Profiles**: List all blacklisted profiles in the workspace
+- **Remove Company From Blacklist**: Remove a LinkedIn company from the blacklist using the company URN
 - **Remove Profile From Blacklist**: Remove profile from the blacklist using the profile URN
 
 ### Campaign
 - **Add Profile to Campaign**: Add profile to the selected campaign
 - **Add Profile to Campaign with Custom Variables**: Add profile to the selected campaign with custom variables
+- **Create Campaign**: Create a new Aimfox campaign
 - **Get Campaign**: Get a specific campaign by ID
 - **List Campaigns**: List all campaigns in the workspace
 - **Pause**: Pause a running campaign
+- **Remove Profile From Campaign**: Remove a profile from the selected campaign using URN or public identifier
 - **Resume**: Resume a paused campaign
 
 ### Conversation
@@ -47,22 +54,33 @@ This node supports the following operations:
 - **Send Message To Conversation**: Send a message to an existing conversation
 - **Start Conversation**: Start a new conversation with the lead
 
+### Custom Variable
+- **Add Custom Variables to Target**: Add custom variables to a specific target in a campaign
+- **Get Campaign Custom Variables**: Get all custom variables for a specific campaign
+- **Get Target Custom Variables**: Get custom variables for a specific target in a campaign
+
 ### Label
-- **List Labels**: List all labels for the selected workspace
 - **Add Label**: Add a new label to the selected workspace
+- **Delete Label**: Delete a label from the workspace
+- **Edit Label**: Edit an existing label in the workspace
+- **List Labels**: List all labels for the selected workspace
 
 ### Lead
 - **Add Label To Lead**: Add a new label to the selected lead
 - **Add Note To Lead**: Add a new note to the selected lead
+- **Delete Note From Lead**: Delete a note from the selected lead
 - **Get Lead**: Get a specific lead by ID
+- **Get Lead Custom Variables**: Get custom variables for a specific lead
+- **List Lead Notes**: List all notes for the selected lead
 - **List Recent Leads**: List recent leads for the selected workspace
 - **Remove Label From Lead**: Remove a label from the selected lead
+- **Update Note**: Update a note for the selected lead
 
-### Templates
-- **List Templates**: List all templates in the selected workspace
-- **Get Template**: Get a specific template by ID
+### Template
 - **Create Template**: Create a new template in the selected workspace
-- **Remove Template**: Remove a template from the selected workspace
+- **Get Template**: Get a specific template by ID
+- **List Templates**: List all templates in the selected workspace
+- **Remove Template**: Remove a template from the workspace
 
 ## Triggers
 
