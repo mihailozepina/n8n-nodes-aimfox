@@ -119,6 +119,47 @@ export const leadOperations: INodeProperties = {
 			},
 		},
 		{
+			name: 'Search Leads',
+			value: 'searchLeads',
+			action: 'Search leads',
+			description: 'Search through all leads in the workspace',
+			routing: {
+				request: {
+					method: 'POST',
+					url: '/leads:search',
+					headers: {},
+					qs: {
+						start: '={{$parameter["start"]}}',
+						count: '={{$parameter["count"]}}',
+					},
+					body: {
+						keywords: '={{$parameter["keywords"] || ""}}',
+						current_companies:
+							'={{$parameter["additionalFilters"]?.currentCompanies ? $parameter["additionalFilters"].currentCompanies.split(",").map(c => c.trim()) : []}}',
+						past_companies:
+							'={{$parameter["additionalFilters"]?.pastCompanies ? $parameter["additionalFilters"].pastCompanies.split(",").map(c => c.trim()) : []}}',
+						education:
+							'={{$parameter["additionalFilters"]?.education ? $parameter["additionalFilters"].education.split(",").map(e => e.trim()) : []}}',
+						interests:
+							'={{$parameter["additionalFilters"]?.interests ? $parameter["additionalFilters"].interests.split(",").map(i => i.trim()) : []}}',
+						labels:
+							'={{$parameter["additionalFilters"]?.filterLabels ? $parameter["additionalFilters"].filterLabels.split(",").map(l => l.trim()) : []}}',
+						languages:
+							'={{$parameter["additionalFilters"]?.languages ? $parameter["additionalFilters"].languages.split(",").map(l => l.trim()) : []}}',
+						locations:
+							'={{$parameter["additionalFilters"]?.locations ? $parameter["additionalFilters"].locations.split(",").map(l => l.trim()) : []}}',
+						origins:
+							'={{$parameter["additionalFilters"]?.origins ? $parameter["additionalFilters"].origins.split(",").map(o => o.trim()) : []}}',
+						skills:
+							'={{$parameter["additionalFilters"]?.skills ? $parameter["additionalFilters"].skills.split(",").map(s => s.trim()) : []}}',
+						lead_of:
+							'={{$parameter["additionalFilters"]?.leadOf ? $parameter["additionalFilters"].leadOf.split(",").map(l => l.trim()) : []}}',
+						optimize: '={{$parameter["optimize"]}}',
+					},
+				},
+			},
+		},
+		{
 			name: 'Update Note',
 			value: 'updateNote',
 			action: 'Update note',

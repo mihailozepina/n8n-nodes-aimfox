@@ -74,6 +74,7 @@ This node supports the following operations:
 - **List Lead Notes**: List all notes for the selected lead
 - **List Recent Leads**: List recent leads for the selected workspace
 - **Remove Label From Lead**: Remove a label from the selected lead
+- **Search Leads**: Search for leads in the workspace with advanced filters
 - **Update Note**: Update a note for the selected lead
 
 ### Template
