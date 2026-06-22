@@ -83,20 +83,33 @@ This node supports the following operations:
 - **List Templates**: List all templates in the selected workspace
 - **Remove Template**: Remove a template from the workspace
 
+### Webhook
+- **Create Webhook**: Create a new webhook in the selected workspace
+- **Delete Webhook**: Delete a webhook from the workspace
+- **Edit Webhook**: Edit an existing webhook in the workspace
+- **List Webhooks**: List all webhooks in the selected workspace
+
 ## Triggers
 
 This node supports the following triggers:
 - **Account Logged In**: This event triggers when a LinkedIn profile successfully logs into the system.
 - **Account Logged Out**: This event triggers when a LinkedIn profile is logged out of the system.
+- **Campaign Created**: This event triggers when a new campaign is created in the workspace.
+- **Campaign Ended**: This event triggers when a campaign has ended.
+- **Campaign Reply**: This event triggers when a reply is received from a campaign.
+- **Campaign Started**: This event triggers when a campaign has started running.
 - **Connect Accepted**: This event triggers when a LinkedIn connection request is accepted, establishing a new connection between profiles.
 - **Connect Sent**: This event triggers when a LinkedIn connection request is successfully sent.
-- **Inmail Reply**: This event triggers when a user replies to a LinkedIn Inmail message, initiating a conversation.
+- **Inbox Event**: This event triggers for inbox-related events.
 - **Inmail**: This event triggers when a LinkedIn Inmail message is successfully sent.
+- **Inmail Reply**: This event triggers when a user replies to a LinkedIn Inmail message, initiating a conversation.
+- **Lead Label Added**: This event triggers when a label is added to a lead.
 - **Message Request**: This event triggers when a message request is sent.
 - **Message Sent**: This event triggers when a message is successfully sent to a LinkedIn profile.
 - **New Connection**: This event triggers when a new connection is acquired through Aimfox, indicating the successful addition of a LinkedIn connection.
 - **New Reply**: This event triggers when a user replies to a LinkedIn message, initiating a conversation.
 - **Profile Viewed**: This event triggers when a LinkedIn profile is viewed.
+- **Reply**: This event triggers when a reply is received.
 
 ## Credentials
 

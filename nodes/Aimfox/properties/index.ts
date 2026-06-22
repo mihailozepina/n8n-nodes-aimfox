@@ -16,6 +16,8 @@ import { leadOperations } from './lead/operations';
 import { noteFields } from './note/fields';
 import { templateFields } from './template/fields';
 import { templateOperations } from './template/operations';
+import { webhookFields } from './webhook/fields';
+import { webhookOperations } from './webhook/operations';
 
 const resourceOptions: INodeProperties = {
 	displayName: 'Resource',
@@ -55,6 +57,10 @@ const resourceOptions: INodeProperties = {
 			name: 'Template',
 			value: 'template',
 		},
+		{
+			name: 'Webhook',
+			value: 'webhook',
+		},
 	],
 	default: 'account',
 };
@@ -69,6 +75,7 @@ export const aimfoxNodeProperties = [
 	labelOperations,
 	leadOperations,
 	templateOperations,
+	webhookOperations,
 	...accountFields,
 	...blacklistFields,
 	...campaignFields,
@@ -78,4 +85,5 @@ export const aimfoxNodeProperties = [
 	...leadFields,
 	...noteFields,
 	...templateFields,
+	...webhookFields,
 ];
