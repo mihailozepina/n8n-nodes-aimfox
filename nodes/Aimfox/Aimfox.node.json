@@ -5,9 +5,6 @@
 	"categories": [
 		"Development"
 	],
-	"subcategories": {
-		"Development": ["API"]
-	},
 	"resources": {
 		"credentialDocumentation": [
 			{
