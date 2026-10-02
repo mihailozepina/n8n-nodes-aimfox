@@ -62,9 +62,7 @@ export const campaignOperations: INodeProperties = {
 					headers: {},
 					body: {
 						name: '={{$parameter["campaignName"]}}',
-						type: '={{$parameter["campaignType"]}}',
 						outreach_type: '={{$parameter["outreachType"]}}',
-						audience_size: '={{$parameter["audienceSize"]}}',
 						account_ids: '={{$parameter["accountIds"].split(",").map(id => id.trim())}}',
 					},
 				},

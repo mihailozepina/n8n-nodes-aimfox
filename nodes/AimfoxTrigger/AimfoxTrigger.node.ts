@@ -9,6 +9,15 @@ import {
 } from 'n8n-workflow';
 
 import { aimfoxTriggerProperties } from './properties';
+import { AIMFOX_DEFAULT_BASE_URL } from '../../credentials/AimfoxApi.credentials';
+
+// The API base URL from the credentials (older credentials don't have one)
+const getBaseUrl = async (context: IHookFunctions): Promise<string> => {
+	const credentials = await context.getCredentials('aimfoxApi');
+	const baseUrl = (credentials.baseUrl as string | undefined) || AIMFOX_DEFAULT_BASE_URL;
+
+	return baseUrl.replace(/\/+$/, '');
+};
 
 export class AimfoxTrigger implements INodeType {
 	description: INodeTypeDescription = {
@@ -54,7 +63,7 @@ export class AimfoxTrigger implements INodeType {
 						Accept: 'application/json',
 					},
 					method: 'GET' as const,
-					url: `https://api.aimfox.com/api/v2/webhooks?integration=true`,
+					url: `${await getBaseUrl(this)}/webhooks?integration=true`,
 					json: true,
 				};
 
@@ -82,7 +91,7 @@ export class AimfoxTrigger implements INodeType {
 						'Content-Type': 'application/json',
 					},
 					method: 'POST' as const,
-					url: `https://api.aimfox.com/api/v2/webhooks`,
+					url: `${await getBaseUrl(this)}/webhooks`,
 					body: {
 						events: events,
 						url: webhookUrl,
@@ -114,7 +123,7 @@ export class AimfoxTrigger implements INodeType {
 								'Content-Type': 'application/json',
 							},
 							method: 'DELETE' as const,
-							url: `https://api.aimfox.com/api/v2/webhooks/${webhookData.webhookId}`,
+							url: `${await getBaseUrl(this)}/webhooks/${webhookData.webhookId}`,
 							json: true,
 						};
 

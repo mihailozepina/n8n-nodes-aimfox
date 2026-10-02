@@ -1,5 +1,9 @@
 import { IAuthenticateGeneric, ICredentialType, INodeProperties, ICredentialTestRequest } from 'n8n-workflow';
 
+// Credentials saved before the Base URL field existed don't have it, so every
+// use falls back to this.
+export const AIMFOX_DEFAULT_BASE_URL = 'https://api.aimfox.com/api/v2';
+
 export class AimfoxApi implements ICredentialType {
 	name = 'aimfoxApi';
 	displayName = 'Aimfox API';
@@ -13,6 +17,13 @@ export class AimfoxApi implements ICredentialType {
 			typeOptions: { password: true },
 			default: '',
 		},
+		{
+			displayName: 'Base URL',
+			name: 'baseUrl',
+			type: 'string',
+			default: AIMFOX_DEFAULT_BASE_URL,
+			description: 'The Aimfox API to call. Leave the default unless you were given a different one, e.g. for testing.',
+		},
 	];
 	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
@@ -24,8 +35,8 @@ export class AimfoxApi implements ICredentialType {
 	};
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'https://api.aimfox.com/api/v2',
-			url: 'accounts',
+			baseURL: `={{$credentials.baseUrl || "${AIMFOX_DEFAULT_BASE_URL}"}}`,
+			url: '/accounts',
 		},
 	};
 }
