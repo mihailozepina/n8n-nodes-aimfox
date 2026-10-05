@@ -1,5 +1,6 @@
 import { INodeType, INodeTypeDescription, NodeConnectionTypes } from 'n8n-workflow';
 import { aimfoxNodeProperties } from './properties';
+import { AIMFOX_DEFAULT_BASE_URL } from '../../credentials/AimfoxApi.credentials';
 
 export class Aimfox implements INodeType {
 	description: INodeTypeDescription = {
@@ -22,7 +23,7 @@ export class Aimfox implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: 'https://api.aimfox.com/api/v2',
+			baseURL: `={{$credentials.baseUrl || "${AIMFOX_DEFAULT_BASE_URL}"}}`,
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',

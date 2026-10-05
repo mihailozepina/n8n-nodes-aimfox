@@ -49,7 +49,6 @@ export const accountOperations: INodeProperties = {
 					headers: {},
 					body: {
 						connect: '={{$parameter["connectLimit"]}}',
-						message_request: '={{$parameter["messageRequestLimit"]}}',
 						inmail: '={{$parameter["inmailLimit"]}}',
 					},
 				},

@@ -95,32 +95,6 @@ export const campaignFields: INodeProperties[] = [
 		required: true,
 	},
 	{
-		displayName: 'Campaign Type',
-		name: 'campaignType',
-		type: 'options',
-		displayOptions: {
-			show: {
-				resource: ['campaign'],
-				operation: ['createCampaign'],
-			},
-		},
-		options: [
-			{
-				name: 'List',
-				value: 'list',
-				description: 'Custom list campaign',
-			},
-			{
-				name: 'Search',
-				value: 'search',
-				description: 'Search-based campaign',
-			},
-		],
-		default: 'list',
-		description: 'The type of campaign to create',
-		required: true,
-	},
-	{
 		displayName: 'Outreach Type',
 		name: 'outreachType',
 		type: 'options',
@@ -137,31 +111,19 @@ export const campaignFields: INodeProperties[] = [
 				description: 'Send connection requests',
 			},
 			{
+				name: 'InMail',
+				value: 'inmail',
+				description: 'Send InMails',
+			},
+			{
 				name: 'Inbound',
-				value: 'inbound',
-				description: 'Inbound outreach',
+				value: 'drip',
+				description: 'Message existing 1st-degree connections (the API calls this a drip campaign). Takes exactly one account.',
 			},
 		],
 		default: 'connect',
 		description: 'The outreach type for the campaign',
 		required: true,
-	},
-	{
-		displayName: 'Audience Size',
-		name: 'audienceSize',
-		type: 'number',
-		displayOptions: {
-			show: {
-				resource: ['campaign'],
-				operation: ['createCampaign'],
-			},
-		},
-		default: 10000,
-		description: 'The maximum audience size for the campaign',
-		required: true,
-		typeOptions: {
-			minValue: 1,
-		},
 	},
 	{
 		displayName: 'Account IDs',
@@ -177,6 +139,34 @@ export const campaignFields: INodeProperties[] = [
 		placeholder: '885983605, 123456789',
 		description: 'Comma-separated list of account IDs to assign to the campaign',
 		required: true,
+	},
+	{
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
+		placeholder: 'Add Field',
+		displayOptions: {
+			show: {
+				resource: ['campaign'],
+				operation: ['createCampaign'],
+			},
+		},
+		default: {},
+		options: [
+			{
+				displayName: 'List ID',
+				name: 'listId',
+				type: 'string',
+				default: '',
+				description: 'Run the campaign on an existing list. Leave it out to create a new, empty list for the campaign.',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'list_id',
+					},
+				},
+			},
+		],
 	},
 	{
 		displayName: 'Profile URN or Public Identifier',
