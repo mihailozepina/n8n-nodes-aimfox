@@ -1,5 +1,5 @@
 {
-	"node": "n8n-nodes-base.aimfox",
+	"node": "n8n-nodes-aimfox.aimfox",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": [

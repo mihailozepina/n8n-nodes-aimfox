@@ -1,5 +1,5 @@
 {
-	"node": "n8n-nodes-base.aimfoxTrigger",
+	"node": "n8n-nodes-aimfox.aimfoxTrigger",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": [
