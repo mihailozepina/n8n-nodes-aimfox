@@ -1,34 +1,23 @@
-import { INodeType, INodeTypeDescription, NodeConnectionTypes } from 'n8n-workflow';
-import { aimfoxNodeProperties } from './properties';
-import { AIMFOX_DEFAULT_BASE_URL } from '../../credentials/AimfoxApi.credentials';
+import { INodeTypeBaseDescription, IVersionedNodeType, VersionedNodeType } from 'n8n-workflow';
+import { AimfoxV1 } from './v1/AimfoxV1.node';
+import { AimfoxV2 } from './v2/AimfoxV2.node';
 
-export class Aimfox implements INodeType {
-	description: INodeTypeDescription = {
-		displayName: 'Aimfox',
-		name: 'aimfox',
-		icon: 'file:aimfox.svg',
-		group: ['transform'],
-		version: 1,
-		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Interact with Aimfox application',
-		defaults: {
-			name: 'Aimfox',
-		},
-		inputs: [NodeConnectionTypes.Main],
-		outputs: [NodeConnectionTypes.Main],
-		credentials: [
-			{
-				name: 'aimfoxApi',
-				required: true,
-			},
-		],
-		requestDefaults: {
-			baseURL: `={{$credentials.baseUrl || "${AIMFOX_DEFAULT_BASE_URL}"}}`,
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		},
-		properties: aimfoxNodeProperties,
-	};
+export class Aimfox extends VersionedNodeType {
+	constructor() {
+		const baseDescription: INodeTypeBaseDescription = {
+			displayName: 'Aimfox',
+			name: 'aimfox',
+			icon: 'file:aimfox.svg',
+			group: ['transform'],
+			description: 'Interact with Aimfox application',
+			defaultVersion: 2,
+		};
+
+		const nodeVersions: IVersionedNodeType['nodeVersions'] = {
+			1: new AimfoxV1(baseDescription),
+			2: new AimfoxV2(baseDescription),
+		};
+
+		super(nodeVersions, baseDescription);
+	}
 }
