@@ -21,30 +21,43 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 ## Operations
 
-This node supports the following operations:
+The Aimfox node has two versions. New nodes use **version 2**, which talks to the Aimfox API v4 and supports the flow builder: a campaign's behavior is its **flow** (view, connect, message, InMail, waits, conditions, A/B splits), and reusable content lives in **assets**. Workflows built with version 1 keep using the v2 API unchanged; to upgrade, replace the node with a new one.
+
+A typical campaign setup in version 2: **Campaign → Create Campaign**, then **Flow → Save Flow** (write a flow, or copy a **Workflow Template**'s definition), then **Campaign → Start or Resume**.
+
+The operations below are version 2's. Version 1 keeps the original set: Template instead of Asset, no Flow or Workflow Template, and campaigns created with an outreach type.
 
 ### Account
 - **Get Account Limits**: Get the interaction limits for a specific account
 - **List Accounts**: List all accounts in the workspace
 - **Set Account Limits**: Update the weekly interaction limits for an account
 
+### Asset
+- **Create Asset**: Create a message, connection note, InMail, voice note or file asset
+- **Delete Asset**: Delete an asset
+- **Get Asset**: Get a specific asset by ID
+- **List Assets**: List all assets in the workspace
+- **Update Asset**: Update an asset
+
 ### Blacklist
 - **Add Companies to Blacklist**: Add multiple LinkedIn companies to the blacklist
 - **Add Profile to Blacklist**: Add profile to the blacklist using the profile URN
 - **List Blacklisted Companies**: List all blacklisted LinkedIn companies in the workspace
-- **List Blacklisted Profiles**: List all blacklisted profiles in the workspace
+- **List Blacklisted Profiles**: List one page of blacklisted profiles in the workspace
 - **Remove Company From Blacklist**: Remove a LinkedIn company from the blacklist using the company URN
 - **Remove Profile From Blacklist**: Remove profile from the blacklist using the profile URN
 
 ### Campaign
 - **Add Profile to Campaign**: Add profile to the selected campaign
 - **Add Profile to Campaign with Custom Variables**: Add profile to the selected campaign with custom variables
-- **Create Campaign**: Create a new Aimfox campaign
+- **Create Campaign**: Create a new Aimfox campaign (it needs a flow before it can start)
 - **Get Campaign**: Get a specific campaign by ID
+- **Get Campaign Metrics**: Get a campaign's views, connections, messages, InMails, replies and more
 - **List Campaigns**: List all campaigns in the workspace
 - **Pause**: Pause a running campaign
-- **Remove Profile From Campaign**: Remove a profile from the selected campaign using URN or public identifier
-- **Resume**: Resume a paused campaign
+- **Remove Profile From Campaign**: Remove a profile from the selected campaign by public identifier
+- **Remove Profiles From Campaign by URN**: Remove one or more profiles from the selected campaign by LinkedIn URN
+- **Start or Resume**: Start a new campaign or resume a paused one
 
 ### Conversation
 - **Get Conversation**: Get a specific conversation by URN
@@ -59,6 +72,13 @@ This node supports the following operations:
 - **Get Campaign Custom Variables**: Get all custom variables for a specific campaign
 - **Get Target Custom Variables**: Get custom variables for a specific target in a campaign
 
+### Flow
+- **Get Flow**: Get one flow version's definition, with the step IDs used by Update Flow Step
+- **Get Flow Metrics**: Get a flow version's results
+- **List Flow Versions**: List a campaign's flow versions, newest first
+- **Save Flow**: Save a campaign's flow (JSON definition; see Flows in the [Aimfox API docs](https://docs.aimfox.com))
+- **Update Flow Step**: Change one step's text or settings in place
+
 ### Label
 - **Add Label**: Add a new label to the selected workspace
 - **Delete Label**: Delete a label from the workspace
@@ -71,23 +91,25 @@ This node supports the following operations:
 - **Delete Note From Lead**: Delete a note from the selected lead
 - **Get Lead**: Get a specific lead by ID
 - **Get Lead Custom Variables**: Get custom variables for a specific lead
+- **Get Lead Journey**: Get every step campaigns took with a lead
 - **List Lead Notes**: List all notes for the selected lead
 - **List Recent Leads**: List recent leads for the selected workspace
 - **Remove Label From Lead**: Remove a label from the selected lead
 - **Search Leads**: Search for leads in the workspace with advanced filters
 - **Update Note**: Update a note for the selected lead
 
-### Template
-- **Create Template**: Create a new template in the selected workspace
-- **Get Template**: Get a specific template by ID
-- **List Templates**: List all templates in the selected workspace
-- **Remove Template**: Remove a template from the workspace
-
 ### Webhook
 - **Create Webhook**: Create a new webhook in the selected workspace
 - **Delete Webhook**: Delete a webhook from the workspace
 - **Edit Webhook**: Edit an existing webhook in the workspace
 - **List Webhooks**: List all webhooks in the selected workspace
+
+### Workflow Template
+- **Create Workflow Template**: Save a flow definition as a reusable template
+- **Delete Workflow Template**: Delete a workflow template
+- **Get Workflow Template**: Get a workflow template with its flow definition
+- **List Workflow Templates**: List built-in and workspace workflow templates
+- **Update Workflow Template**: Rename a workflow template or replace its definition
 
 ## Triggers
 
