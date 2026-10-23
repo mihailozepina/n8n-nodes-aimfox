@@ -31,9 +31,11 @@ export const flowOperations: INodeProperties = {
 			description: "Get a flow version's results across all sending accounts",
 			routing: {
 				request: {
-					method: 'GET',
+					// POST like campaign metrics; with no account_ids the API counts all accounts
+					method: 'POST',
 					url: '=/campaigns/{{$parameter["flowCampaignId"]}}/flows/{{$parameter["flowId"]}}/metrics',
 					headers: {},
+					body: {},
 				},
 			},
 		},
